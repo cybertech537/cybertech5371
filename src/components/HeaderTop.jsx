@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import React from 'react'
+
 import { FaEnvelope, FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 
-export default function FoooterTop() {
+export default function HeaderTop() {
   return (
     <div className='bg-primary text-white py-2.5'>
       <div className="container">
