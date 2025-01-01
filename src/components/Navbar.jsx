@@ -1,47 +1,65 @@
 import Link from 'next/link';
 import React from 'react'
 import { RiMenu2Line } from "react-icons/ri";
+import { LiaTimesSolid } from "react-icons/lia";
+import Logo from './shared/Logo';
 
 export default function Navbar() {
    return (
-      <div className="container">
-      <div className="navbar bg-base-100 px-0 py-4">
-         <div className="navbar-start">
-            <div className="dropdown">
-               <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                  <RiMenu2Line />
+      <>
+         <div className="sticky top-0 left-0 w-full z-30 bg-white shadow-md overflow-hidden">
+            <div className="container">
+               <div className="navbar bg-base-100 px-0 py-4">
+                  <div className="navbar-start">
+                     {/* brand logo */}
+                     <Logo path={'/'} />
+                  </div>
+                  <div className="navbar-center hidden lg:flex">
+                     <ul className="menu menu-horizontal px-1 text-lg">
+                        {
+                           navItems?.map((item, index) => <li key={index}><a href={item.path}>{item.label}</a></li>)
+                        }
+                     </ul>
+                  </div>
+                  <div className="navbar-end items-center gap-3">
+                     <div className="dropdown">
+                        <label htmlFor='mobile-menu-drawer' className="inline-block cursor-pointer lg:hidden">
+                           <RiMenu2Line className='text-3xl' />
+                        </label>
+                        <ul
+                           tabIndex={0}
+                           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                           {
+                              navItems?.map((item, index) => <li key={index}><a href={item.path}>{item.label}</a></li>)
+                           }
+                        </ul>
+                     </div>
+                     <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
+                  </div>
                </div>
-               <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                  {
-                     navItems?.map((item, index) => <li key={index}><a href={item.path}>{item.label}</a></li>)
-                  }
-               </ul>
             </div>
-            {/* brand logo */}
-            <Link href={'/'}>
-               <span className='font-bold text-3xl'>
-                  <span className='text-primary'>Donor </span>
-                  Bridge
-               </span>
-               <span className='block text-gray-400 uppercase text-xs'>
-                  Centralized Blood Donation
-               </span>
-            </Link>
          </div>
-         <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-               {
-                  navItems?.map((item, index) => <li key={index}><a href={item.path}>{item.label}</a></li>)
-               }
-            </ul>
+
+         {/* mobile menu */}
+         <div className="drawer">
+            <input id="mobile-menu-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-side z-40">
+               <label htmlFor="mobile-menu-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+               <div className="menu bg-white min-h-full w-80 pb-4 pl-4 pr-3 pt-3">
+                  <div className="text-right">
+                     <label htmlFor="mobile-menu-drawer" className='inline-block text-3xl cursor-pointer'>
+                        <LiaTimesSolid />
+                     </label>
+                  </div>
+                  <ul className="text-lg">
+                     {
+                        navItems?.map((item, index) => <li key={index}><a href={item.path}>{item.label}</a></li>)
+                     }
+                  </ul>
+               </div>
+            </div>
          </div>
-         <div className="navbar-end">
-            <a className="btn">Button</a>
-         </div>
-      </div>
-      </div>
+      </>
    )
 }
 
@@ -53,6 +71,10 @@ const navItems = [
    {
       label: "About",
       path: "/about"
+   },
+   {
+      label: "Find Donors",
+      path: "/donors"
    },
    {
       label: "Contact",

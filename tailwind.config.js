@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -17,14 +19,19 @@ module.exports = {
       padding: '16px'
     },
     extend: {
+      fontFamily: {
+        'sans': ['"Proxima Nova"', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "#ef3d32"
       },
     },
     
   },
   daisyui: {
+    base: false,
     themes: [
       {
         donorbridge: {
