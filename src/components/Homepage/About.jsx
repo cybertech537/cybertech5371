@@ -7,6 +7,7 @@ export default function About() {
    return (
       <div className='py-20'>
          <div className="container">
+          <h1>This is Aslam</h1>
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-10">
                <div className="">
                   <Image src={`/img/about.jpg`} height={500} width={650} alt='about' className='' />

@@ -8,6 +8,7 @@ export default function Hero() {
          <Image src={`/img/hero.jpg`} height={500} width={1920} alt='hero' className='absolute h-full w-full object-cover object-left top-0 left-0' />
          {/* <div className="hero-overlay bg-opacity-60"></div> */}
          <div className="container relative z-10">
+          <h1>This is Aslam</h1>
             <div className="max-w-2xl">
                <h1 className="mb-5 text-3xl md:text-4xl font-bold text-primary">
                   Donate Blood, save life!
