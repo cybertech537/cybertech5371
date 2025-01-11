@@ -1,8 +1,8 @@
 import "../globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-// import AuthProvider from "@/services/AuthProvider";
 import HeaderTop from "@/components/HeaderTop";
+// import { AuthProvider } from "@/services/AuthProvider";
 
 export const metadata = {
   title: "Donor Bridge",

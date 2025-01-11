@@ -1,13 +1,21 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import SocialLogin from '@/components/shared/SocialLogin';
 import { useForm } from 'react-hook-form';
 import PageHero from '@/components/shared/PageHero';
 import InputField from '@/components/shared/InputField';
+import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
 
 export default function RegisterDonor() {
+   // const divisions = getAllDivision('en')
+   const districts = getAllDistrict('en')
+   const upazilas = getAllUpazila("en");
+
+   // console.log(districts)
+   // console.log(upazilas)
+
 
    const {
       register,
@@ -15,7 +23,23 @@ export default function RegisterDonor() {
       watch,
       formState: { errors },
    } = useForm()
-   const SubmitHandler = (data) => console.log(data)
+
+   const [selectedDistrict, setSelectedDistrict] = useState(null)
+   const [availableUpazilas, setAvailableUpazilas] = useState([])
+
+   const handleDistrictChange = (e) => {
+      const districtValue = e.target.value
+      setSelectedDistrict(districtValue)
+
+      const upazilasForDistrict = upazilas[districtValue] || [];
+      setAvailableUpazilas(upazilasForDistrict);
+   };
+
+   const SubmitHandler = (data) => {
+      console.log({
+         ...data
+       });
+   }
 
    return (
       <div className="bg-gray-50 pb-14">
@@ -34,6 +58,51 @@ export default function RegisterDonor() {
                         register={register}
                         placeholder={'Full Name'}
                         validation={{ required: 'Name can not be empty.' }} />
+
+                     <div>
+                        <label htmlFor="district" className="block mb-2 text-lg font-semibold">
+                           District
+                           <span className="text-red-600 inline-block ml-1">*</span>
+                        </label>
+                        <select
+                           {...register('district')}
+                           id="district"
+                           onChange={handleDistrictChange}
+                           className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
+                        >
+                           <option value="">-- Select District --</option>
+                           {Object.values(districts).flatMap((districtArray) =>
+                              districtArray.map((district) => (
+                                 <option key={district.value} value={district.value}>
+                                    {district.title}
+                                 </option>
+                              ))
+                           )}
+                        </select>
+                     </div>
+
+                     {/* Upazila Dropdown */}
+                     <div>
+                        <label htmlFor="upazila" className="block mb-2 text-lg font-semibold">
+                           Upazila
+                           <span className="text-red-600 inline-block ml-1">*</span>
+                        </label>
+                        <select
+                           {...register('upazila')}
+                           name='upazila'
+                           id="upazila"
+                           className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
+                        >
+                           <option value="">-- Select Upazila --</option>
+                           {availableUpazilas &&
+                              availableUpazilas.map((upazila) => (
+                                 <option key={upazila.value} value={upazila.value}>
+                                    {upazila.title}
+                                 </option>
+                              ))}
+                        </select>
+                     </div>
+                     
 
                      <InputField
                         name={'email'}

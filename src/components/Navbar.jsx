@@ -5,6 +5,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 import Logo from './shared/Logo';
 
 export default function Navbar() {
+
    return (
       <>
          <div className="sticky top-0 left-0 w-full z-30 bg-white shadow-md overflow-hidden">
