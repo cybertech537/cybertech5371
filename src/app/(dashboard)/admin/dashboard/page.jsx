@@ -4,9 +4,8 @@ import { BiDonateBlood } from 'react-icons/bi';
 import { GiHeartDrop } from 'react-icons/gi';
 import { MdOutlineMap, MdOutlineBloodtype } from 'react-icons/md';
 import { LuHeartHandshake } from "react-icons/lu";
-// import withAuth from '@/components/withAuth';
 
-const Dashboard = () => {
+export default function Dashboard() {
 
    return (
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
@@ -48,5 +47,3 @@ const Dashboard = () => {
       </div>
    );
 }
-
-// export default withAuth(Dashboard, ["Admin"]);

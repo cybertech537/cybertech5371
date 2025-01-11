@@ -6,17 +6,16 @@ import { useForm } from 'react-hook-form';
 import InputField from '@/components/shared/InputField';
 import SocialLogin from '@/components/shared/SocialLogin';
 import toast, { Toaster } from 'react-hot-toast';
-import { useAuth } from '@/services/AuthProvider';
+// import { useAuth } from '@/services/AuthProvider';
 import axios from 'axios';
-import { Router } from 'next/router';
+// import { Router } from 'next/router';
 
 export default function ClientLogin() {
 
-   const router = Router()
+   // const router = Router()
 
-   const { setUser } = useAuth();
+   // const { setUser } = useAuth();
 
-   console.log('setUser', setUser)
 
    const [step, setStep] = useState('login');
    const [errorMsg, setErrorMsg] = useState('')
@@ -101,7 +100,7 @@ export default function ClientLogin() {
             }
 
             toast.success('Successfully Logged in!');
-            router.push('/admin/dashboard')
+            // router.push('/admin/dashboard')
 
          } else {
             toast.error(result.msg || 'OTP verification failed. Please try again.');
