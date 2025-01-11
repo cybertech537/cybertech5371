@@ -21,14 +21,14 @@ export default function SearchForm() {
                   </select>
                </div>
                <div className="">
-                  <label className='block font-semibold mb-2' htmlFor="blood-group">Donor Type</label>
+                  <label className='block font-semibold mb-2' htmlFor="blood-group">District</label>
                   <select name="bloodGroup" id="blood-group" className='w-full bg-white border-0 px-4 py-2.5'>
                      <option value="">All</option>
                      <option value="eligible">Eligible</option>
                   </select>
                </div>
                <div className="">
-                  <label className='block font-semibold mb-2' htmlFor="area">Area</label>
+                  <label className='block font-semibold mb-2' htmlFor="area">Thana / Upazila</label>
                   <select name="area" id="area" className='w-full bg-white border-0 px-4 py-2.5'>
                      <option value="">Select </option>
                      <option value="">Option 2 </option>
