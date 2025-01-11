@@ -12,7 +12,7 @@ export default function InputField({ name, label, placeholder, register, validat
             <select
                id={name}
                {...register(name, validation)}
-               className='w-full px-4 py-2.5 rounded border border-gray-200'
+               className='w-full px-4 py-2.5 rounded border border-gray-200 bg-white'
             >
                <option value="">Select {label}</option>
                {options?.map((option, index) => (

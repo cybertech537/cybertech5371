@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
 import { LuLogIn } from "react-icons/lu";
-import { BsSearchHeart } from "react-icons/bs";
 import { LuUserRoundSearch } from "react-icons/lu";
 
 export default function Promo() {
@@ -14,7 +13,7 @@ export default function Promo() {
                   <h2 className="text-3xl font-bold mb-5">
                      Make a Blood Request
                   </h2>
-                  <p className='text-lg'>Can't find a donor? Post your custom blood request to reach potential donors.</p>
+                  <p className='text-lg'>Can not find a donor? Post your custom blood request to reach potential donors.</p>
                </div>
                <LuLogIn className='text-6xl' />
             </Link>

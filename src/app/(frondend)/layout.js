@@ -1,8 +1,8 @@
-import "./globals.css";
+import "../globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AuthProvider from "@/services/AuthProvider";
 import HeaderTop from "@/components/HeaderTop";
+// import { AuthProvider } from "@/services/AuthProvider";
 
 export const metadata = {
   title: "Donor Bridge",
@@ -13,12 +13,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
+        {/* <AuthProvider> */}
           <HeaderTop />
           <Navbar />
-          {children}
+            {children}
           <Footer />
-        </AuthProvider>
+        {/* </AuthProvider> */}
       </body>
     </html>
   );
