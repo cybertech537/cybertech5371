@@ -39,11 +39,11 @@ export default function Footer() {
                         Help & Support
                      </h5>
                      <div className="flex flex-col gap-3">
-                        <Link href={'/'} className='hover:underline'>FAQs</Link>
-                        <Link href={'/'} className='hover:underline'>Blog</Link>
-                        <Link href={'/'} className='hover:underline'>Contact us</Link>
-                        <Link href={'/'} className='hover:underline'>Privacy Policy</Link>
-                        <Link href={'/'} className='hover:underline'>Terms & Conditions</Link>
+                        <Link href={'#'} className='hover:underline'>FAQs</Link>
+                        <Link href={'#'} className='hover:underline'>Blog</Link>
+                        <Link href={'#'} className='hover:underline'>Contact us</Link>
+                        <Link href={'#'} className='hover:underline'>Privacy Policy</Link>
+                        <Link href={'/terms-and-conditions'} className='hover:underline'>Terms & Conditions</Link>
                      </div>
                   </nav>
                </div>

@@ -1,102 +1,77 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { FaDisease } from 'react-icons/fa6'
-import { FiFacebook, FiLinkedin, FiTwitter, FiUser } from 'react-icons/fi'
-import { IoCalendarClearSharp } from 'react-icons/io5'
-import { LuMapPin } from 'react-icons/lu'
 
 export default function RecipientDetail() {
   return (
-    <div className='py-20 bg-slate-50'>
+    <div className='py-16 bg-slate-50'>
       <div className="container">
-        <div className="">
-          <div className="flex flex-wrap gap-8 border-2 border-gray-200 bg-white p-10">
-            <div className="">
-              <Image src={'https://i.ibb.co.com/Sy3Y3sX/Jahid.jpg'} alt='profile' height={200} width={200} className='border-4 border-white shadow-lg rounded-full object-cover' />
-            </div>
-            <div className="md:flex-1">
-              <h2 className='text-2xl lg:text-3xl'>Arthur Eclipsed</h2>
-              <div className="flex flex-wrap gap-4 text-2xl mt-4 text-primary">
-                <Link href={'https://facebook.com'} target='_blank'><FiLinkedin /></Link>
-                <Link href={'https://facebook.com'} target='_blank'><FiFacebook /></Link>
-                <Link href={'https://facebook.com'} target='_blank'><FiTwitter /></Link>
+        <div className="max-w-4xl mx-auto">
+          <h1 className='text-center mb-6 text-4xl'>Urgent Blood Needed</h1>
+          <div className="border-2 border-gray-200 bg-white p-5 sm:p-10">
+            <div className="flex flex-wrap gap-3 items-center">
+              <Image src={'https://i.ibb.co.com/Sy3Y3sX/Jahid.jpg'} alt='profile' height={60} width={60} className='border-4 border-primary shadow-lg rounded-full object-cover' />
+              <div className="flex-1">
+                <p>
+                  Requested by <Link href={'/'} className='text-primary underline hover:no-underline'>Mark Neel</Link>
+                </p>
+                <p>21 hours ago</p>
               </div>
-              <div className="text-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-                <div className="">
-                  <div className="uppercase text-gray-600 mb-2 text-base">
-                    Contact
-                  </div>
-                  <div className="font-bold">
-                    <Link href={'tel:01953182201'}>01953182201</Link>
-                  </div>
+            </div>
+            <div className="text-lg mt-5">
+              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem asperiores, dolorem culpa reiciendis nihil ipsum quasi, necessitatibus facilis numquam voluptatibus veniam neque? Sint iste sunt aut voluptatem quod facere reiciendis?</p>
+            </div>
+            <div className="text-lg grid grid-cols-1 sm:grid-cols-2 gap-x-6 mt-10">
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Contact
                 </div>
-                <div className="">
-                  <div className="uppercase text-gray-600 mb-2 text-base">
-                    Address
-                  </div>
-                  <div className="font-bold">
-                    Mirpur, Dhaka
-                  </div>
+                <div className="font-bold">
+                  <Link href={'tel:01953182201'}>01953182201</Link>
                 </div>
-                <div className="">
-                  <div className="uppercase text-gray-600 mb-2 text-base">
-                    Occupation
-                  </div>
-                  <div className="font-bold">Student</div>
+              </div>
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Extra Contact
                 </div>
+                <div className="font-bold">
+                  <Link href={'tel:01953182201'}>01953182201</Link>
+                </div>
+              </div>
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Area
+                </div>
+                <div className="font-bold">
+                  Mirpur, Dhaka
+                </div>
+              </div>
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Needed on
+                </div>
+                <div className="font-bold">10 February, 2025</div>
+              </div>
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Disease
+                </div>
+                <div className="font-bold">Dengue</div>
+              </div>
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Quantity
+                </div>
+                <div className="font-bold">2 Bag</div>
+              </div>
+              <div className="py-3 border-t-2">
+                <div className="uppercase text-gray-600 mb-2 text-base">
+                  Blood Group
+                </div>
+                <div className="font-bold">A+</div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="overflow-x-auto mt-10 border-2 border-gray-200 bg-white p-10">
-          <h2 className="text-2xl mb-4">
-            Recipient History
-          </h2>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th className='border-b'>
-                  <div className="flex gap-1 items-center text-sm">
-                    <FiUser className='text-primary text-lg' />
-                    Donor Name
-                  </div>
-                </th>
-                <th className='border-b'>
-                  <div className="flex gap-1 items-center text-sm">
-                    <FaDisease className='text-primary text-lg' />
-                    Disease
-                  </div>
-                </th>
-                <th className='border-b'>
-                  <div className="flex gap-1 items-center text-sm">
-                    <LuMapPin className='text-primary text-lg' />
-                    Area
-                  </div>
-                </th>
-                <th className='border-b'>
-                  <div className="flex gap-1 items-center text-sm">
-                    <IoCalendarClearSharp className='text-primary text-lg' />
-                    Receive Date
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className='border-b'>Mark Neel</td>
-                <td className='border-b'>Road Accident</td>
-                <td className='border-b'>Mirpur, Dhaka</td>
-                <td className='border-b'>10/10/2024</td>
-              </tr>
-              <tr>
-                <td className='border-b'>Mark Neel</td>
-                <td className='border-b'>Road Accident</td>
-                <td className='border-b'>Mirpur, Dhaka</td>
-                <td className='border-b'>10/10/2024</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
