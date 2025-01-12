@@ -13,9 +13,6 @@ export default function RegisterDonor() {
    const districts = getAllDistrict('en')
    const upazilas = getAllUpazila("en");
 
-   // console.log(districts)
-   // console.log(upazilas)
-
 
    const {
       register,

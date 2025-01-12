@@ -76,9 +76,5 @@ const navItems = [
    {
       label: "Find Donors",
       path: "/donors"
-   },
-   {
-      label: "Contact",
-      path: "/contact"
-   },
+   }
 ]

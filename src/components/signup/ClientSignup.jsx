@@ -232,6 +232,12 @@ export default function ClientSignup() {
                      }}
                   />
 
+                  <label class="text-base mt-5 block">
+                     <span>
+                        I agree to <Link href={'/terms-and-conditions'} className='text-primary'>terms and conditions</Link>.
+                        </span>
+                  </label>
+
                   <button className="btn btn-primary w-full">Sign Up</button>
 
                   <div className="text-center">Or Sign Up with</div>
