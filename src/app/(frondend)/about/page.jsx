@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 export default function AboutUs() {
 
-
    return (
       <>
          <div className="bg-gray-50 pb-14">
@@ -39,7 +38,7 @@ export default function AboutUs() {
                      <p>As a member of our community, you can rely on others to support you in times of need. Your first donation opens the door to a network of helpers.</p>
 
                      <h3>Promote Mutual Care</h3>
-                     <p>Our platform is built on the principle of mutual aid: "Help others, and others will help you." Together, we create a safety net for everyone.</p>
+                     <p>Our platform is built on the principle of mutual aid: &quot;Help others, and others will help you.&quot; Together, we create a safety net for everyone.</p>
 
                      <h3>Convenient and Transparent</h3>
                      <p>Our system makes it easy to connect donors with recipients. Clear guidelines and an efficient process ensure a seamless experience.</p>

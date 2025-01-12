@@ -214,7 +214,7 @@ export default function ClientLogin() {
             </form>
          )}
          <div className="text-center text-gray-400 mt-10">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-primary hover:underline">
                Sign Up
             </Link>
