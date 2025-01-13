@@ -13,7 +13,7 @@ export default function BloodRequestCard() {
          </div>
          <div className="text-lg flex gap-1 items-center">
             <LuMapPin className='text-primary text-xl mr-1' />
-            Mirpur-10, Dhaka
+            District, Thana
          </div>
          <div className="text-lg flex gap-1 items-center">
             <FaDisease className='text-primary text-xl mr-1' />

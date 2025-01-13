@@ -46,19 +46,14 @@ const links = [
       path: "/admin/profile",
       icon: <MdOutlineAccountCircle className='text-2xl text-primary' />
    },
-   {
-      label: "Donation History",
-      path: "/admin/donation-histroy",
-      icon: <MdManageHistory className='text-2xl text-primary' />
-   },
+   // {
+   //    label: "Donation History",
+   //    path: "/admin/donation-histroy",
+   //    icon: <MdManageHistory className='text-2xl text-primary' />
+   // },
    {
       label: "All Donors",
       path: "/admin/donors",
       icon: <GiHeartDrop className='text-2xl text-primary' />
-   },
-   {
-      label: "All Recipients",
-      path: "/admin/recipients",
-      icon: <BiDonateBlood className='text-2xl text-primary' />
-   },
+   }
 ]

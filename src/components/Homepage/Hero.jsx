@@ -16,7 +16,7 @@ export default function Hero() {
                   Be the reason someone smiles today.
                </p>
                {/* Become a donor, when loggedin browse request */}
-               <Link href={'/register/donor/'} className="mt-10 btn btn-primary text-lg px-10 py-3">
+               <Link href={'/signup/'} className="mt-10 btn btn-primary text-lg px-10 py-3">
                   Become a donor
                </Link>
             </div>

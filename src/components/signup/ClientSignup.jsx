@@ -194,12 +194,6 @@ export default function ClientSignup() {
                      errors={errors}
                      register={register}
                      placeholder="Enter email"
-                     validation={{
-                        pattern: {
-                           value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                           message: 'Invalid email address.',
-                        },
-                     }}
                   />
 
                   <InputField
@@ -232,7 +226,7 @@ export default function ClientSignup() {
                      }}
                   />
 
-                  <label class="text-base mt-5 block">
+                  <label className="text-base mt-5 block">
                      <span>
                         I agree to <Link href={'/terms-and-conditions'} className='text-primary'>terms and conditions</Link>.
                         </span>
