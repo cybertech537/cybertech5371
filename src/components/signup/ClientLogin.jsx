@@ -80,7 +80,10 @@ export default function ClientLogin() {
 
          console.log('response: ', response)
          console.log('result: ', result)
+         document.cookie = `accessToken=${result?.token}; path=/; secure;  SameSite=Strict; max-age=3600`;
 
+            document.cookie = `accessToken=${result?.token}; path=/; secure; SameSite=Strict; max-age=3600`;
+          
          if (response.ok) {
 
             localStorage.setItem("agreeToken", result.token);
@@ -94,12 +97,15 @@ export default function ClientLogin() {
                // Store the user details in localStorage as a single object
                const userDetails = userResponse.data.details;
 
+document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; max-age=3600`; // Example: Token valid for 1 hour
+
 
                localStorage.setItem("userData", JSON.stringify(userDetails));
 
             }
 
             toast.success('Successfully Logged in!');
+            window.location.href = '/admin/dashboard';
             // router.push('/admin/dashboard')
 
          } else {

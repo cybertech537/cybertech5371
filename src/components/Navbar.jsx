@@ -1,11 +1,15 @@
+"use client"
 import Link from 'next/link';
 import React from 'react'
 import { RiMenu2Line } from "react-icons/ri";
 import { LiaTimesSolid } from "react-icons/lia";
 import Logo from './shared/Logo';
 import DisplayProfile from './shared/DisplayProfile';
+import { useAuth } from '@/services/AuthProvider';
 
 export default function Navbar() {
+const {user} = useAuth()
+
 
    return (
       <>
