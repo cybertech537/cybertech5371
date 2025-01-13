@@ -10,7 +10,7 @@ export default function page() {
       <SearchForm />
       <div className='py-16 bg-gradient-to-b from-red-50 to-white'>
         <div className="container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {donors?.map((donor, index) =>
               <Link href={`/donors/${donor.uid}`} key={index} className='flex flex-wrap gap-4 bg-white shadow-md p-5'>
                 <div className="flex-1">
@@ -21,6 +21,12 @@ export default function page() {
                         <strong className='w-16 inline-block'>Area</strong>: 
                         <span className='inline-block ml-2'>
                            District, Thana
+                        </span>
+                     </li>
+                    <li>
+                        <strong className='w-16 inline-block'>Contact</strong>: 
+                        <span className='inline-block ml-2'>
+                           01953182201
                         </span>
                      </li>
                   </ul>

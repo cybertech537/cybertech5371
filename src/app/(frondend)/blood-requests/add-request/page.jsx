@@ -68,11 +68,48 @@ export default function AddRequest () {
                      />
 
                      <InputField
+                        name="district"
+                        label="District"
+                        type="select"
+                        register={register}
+                        validation={{ required: 'District is required.' }}
+                        errors={errors}
+                        options={[
+                           { value: 'A+', label: 'A+' },
+                           { value: 'A-', label: 'A-' },
+                           { value: 'B+', label: 'B+' },
+                           { value: 'B-', label: 'B-' },
+                           { value: 'AB+', label: 'AB+' },
+                           { value: 'AB-', label: 'AB-' },
+                           { value: 'O+', label: 'O+' },
+                           { value: 'O-', label: 'O-' },
+                        ]}
+                     />
+                     <InputField
+                        name="policestation"
+                        label="Thana / Upazila"
+                        type="select"
+                        register={register}
+                        validation={{ required: 'Thana / Upazila is required.' }}
+                        errors={errors}
+                        options={[
+                           { value: 'A+', label: 'A+' },
+                           { value: 'A-', label: 'A-' },
+                           { value: 'B+', label: 'B+' },
+                           { value: 'B-', label: 'B-' },
+                           { value: 'AB+', label: 'AB+' },
+                           { value: 'AB-', label: 'AB-' },
+                           { value: 'O+', label: 'O+' },
+                           { value: 'O-', label: 'O-' },
+                        ]}
+                     />
+
+                     <InputField
                         name={'area'}
-                        label={'Area'}
+                        label={'Exact Area'}
                         errors={errors}
                         register={register}
-                        placeholder={'Enter Area'}
+                        placeholder={'Enter exact area'}
                         validation={{
                            required: "Area is required"
                         }}

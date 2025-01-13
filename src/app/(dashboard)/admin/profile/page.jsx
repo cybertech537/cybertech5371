@@ -1,163 +1,181 @@
-"use client"
-
+import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
-import Link from 'next/link';
-import SocialLogin from '@/components/shared/SocialLogin';
-import { useForm } from 'react-hook-form';
-import InputField from '@/components/shared/InputField';
+import { FiFacebook, FiLinkedin, FiTwitter, FiUser } from 'react-icons/fi'
+import { GiHeartDrop } from 'react-icons/gi'
+import { FaDisease } from 'react-icons/fa6'
+import { IoCalendarClearSharp } from 'react-icons/io5'
+import { LuMapPin } from 'react-icons/lu'
 
-export default function Profile() {
-
-   const {
-      register,
-      handleSubmit,
-      watch,
-      formState: { errors },
-   } = useForm()
-   const SubmitHandler = (data) => console.log(data)
-
-   return (
-      <div className="bg-white p-5 shadow max-w-7xl">
-         <form onSubmit={handleSubmit(SubmitHandler)} className='space-y-10'>
-
-            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
-               <InputField
-                  name={'fullname'}
-                  label={'Full Name'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Full Name'}
-                  validation={{ required: 'Name can not be empty.' }} />
-
-               <InputField
-                  name={'email'}
-                  type={'email'}
-                  label={'Email'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Enter email'}
-                  validation={{
-                     //required: 'Email can not be empty.',
-                     pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                        message: 'Invalid email address.',
-                     }
-                  }} />
-
-               <InputField
-                  name={'contact'}
-                  label={'Contact'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'01723-789454'}
-                  validation={{
-                     required: 'Contact number can not be empty.',
-                     pattern: {
-                        value: /^(?:\+88|0088)?01[3-9]\d{8}$|^(?:\+88|0088)?0\d{8,10}$/,
-                        message: 'Invalid contact number.',
-                     }
-                  }} />
-
-               <InputField
-                  name={'password'}
-                  label={'Password'}
-                  type={'password'}
-                  errors={errors}
-                  register={register}
-                  validation={{
-                     required: 'Password can not be empty.',
-                     pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                        message: "Password must be at least 8 characters long, include one letter, one number, and one special character."
-                     }
-                  }} />
-
-               <InputField
-                  name="bloodGroup"
-                  label="Blood Group"
-                  type="select"
-                  register={register}
-                  validation={{ required: 'Blood group is required.' }}
-                  errors={errors}
-                  options={[
-                     { value: 'A+', label: 'A+' },
-                     { value: 'A-', label: 'A-' },
-                     { value: 'B+', label: 'B+' },
-                     { value: 'B-', label: 'B-' },
-                     { value: 'AB+', label: 'AB+' },
-                     { value: 'AB-', label: 'AB-' },
-                     { value: 'O+', label: 'O+' },
-                     { value: 'O-', label: 'O-' },
-                  ]}
-               />
-
-               <InputField
-                  name={'lastDonationDate'}
-                  label={'Last Donation Date'}
-                  type={'date'}
-                  errors={errors}
-                  register={register}
-                  validation={{}} // No 'required' rule here
-               />
-
-               {/* Age (Optional) */}
-               <InputField
-                  name={'age'}
-                  label={'Age'}
-                  type={'number'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Your Age'}
-                  validation={{
-                     pattern: {
-                        value: /^[1-9][0-9]?$/, // Optional validation to ensure age is 1-99
-                        message: 'Age must be between 1 and 99.',
-                     },
-                  }}
-               />
-
-               {/* Address (Optional) */}
-               <InputField
-                  name={'address'}
-                  label={'Address'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Your Address'}
-                  validation={{}} // No 'required' rule here
-               />
-
-               {/* Availability (Optional) */}
-               <InputField
-                  name={'availability'}
-                  label={'Availability'}
-                  type={'select'}
-                  errors={errors}
-                  register={register}
-                  validation={{}}
-                  options={[
-                     { value: 'weekdays', label: 'Weekdays' },
-                     { value: 'weekends', label: 'Weekends' },
-                  ]}
-               />
-
-               {/* Preferred Donation Location (Optional) */}
-               <InputField
-                  name={'preferredLocation'}
-                  label={'Preferred Donation Location'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Your Preferred Location'}
-                  validation={{}} // No 'required' rule here
-               />
-
-            </div>
-
+export default function DonorDetail() {
+  return (
+   <div className="">
+      <div className="">
+         <div className="flex flex-wrap gap-8 border-2 border-gray-200 bg-white p-10">
             <div className="">
-               <button className='btn btn-primary w-full rounded'>
-                  Update
-               </button>
+               <Image src={'https://i.ibb.co.com/Sy3Y3sX/Jahid.jpg'} alt='profile' height={200} width={200} className='border-4 border-white shadow-lg rounded-full object-cover' />
             </div>
-         </form>
+            <div className="md:flex-1">
+               <div className="flex justify-between items-start">
+                  <div className="">
+                     <h2 className='text-2xl lg:text-3xl'>Arthur Eclipsed</h2>
+                     <div className="inline-flex gap-2 text-lg items-center text-gray-500">
+                        <GiHeartDrop className='text-primary mt-1' />
+                        Blood Donation Fighter
+                     </div>
+                     <div className="flex flex-wrap gap-4 text-2xl mt-4 text-primary">
+                        <Link href={'https://facebook.com'} target='_blank'><FiLinkedin /></Link>
+                        <Link href={'https://facebook.com'} target='_blank'><FiFacebook /></Link>
+                        <Link href={'https://facebook.com'} target='_blank'><FiTwitter /></Link>
+                     </div>
+                  </div>
+                  <Link href={'/admin/profile/edit/'} className='btn btn-primary'>Edit / Update</Link>
+               </div>
+               <div className="text-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+                  <div className="">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                     Contact
+                  </div>
+                  <div className="font-bold">
+                     <Link href={'tel:01953182201'}>01953182201</Link>
+                  </div>
+                  </div>
+                  <div className="">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                     Blood Group
+                  </div>
+                  <div className="font-bold">A+</div>
+                  </div>
+                  <div className="">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                     Address
+                  </div>
+                  <div className="font-bold">
+                     Mirpur, Dhaka
+                  </div>
+                  </div>
+                  <div className="">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                     Occupation
+                  </div>
+                  <div className="font-bold">Student</div>
+                  </div>
+                  <div className="">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                     Total Donation
+                  </div>
+                  <div className="font-bold">
+                     4 times
+                  </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-   )
+      <div className="overflow-x-auto mt-10 border-2 border-gray-200 bg-white p-10">
+         <div className="mb-4">
+            <h2 className="text-2xl mb-2">
+               Donation History
+            </h2>
+            <p>Below data shows how many times you donated blood.</p>
+         </div>
+         <table className='table'>
+         <thead>
+            <tr>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <FiUser className='text-primary text-lg' />
+                  Recipant Name
+               </div>
+               </th>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <FaDisease className='text-primary text-lg' />
+                  Disease
+               </div>
+               </th>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <LuMapPin className='text-primary text-lg' />
+                  Area
+               </div>
+               </th>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <IoCalendarClearSharp className='text-primary text-lg' />
+                  Donation Date
+               </div>
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td className='border-b'>Mark Neel</td>
+               <td className='border-b'>Road Accident</td>
+               <td className='border-b'>Mirpur, Dhaka</td>
+               <td className='border-b'>10/10/2024</td>
+            </tr>
+            <tr>
+               <td className='border-b'>Mark Neel</td>
+               <td className='border-b'>Road Accident</td>
+               <td className='border-b'>Mirpur, Dhaka</td>
+               <td className='border-b'>10/10/2024</td>
+            </tr>
+         </tbody>
+         </table>
+      </div>
+      <div className="overflow-x-auto mt-10 border-2 border-gray-200 bg-white p-10">
+         <div className="mb-4">
+            <h2 className="text-2xl mb-2">
+               Recipient History
+            </h2>
+            <p>Below data shows how many times you received blood.</p>
+         </div>
+         <table className='table'>
+         <thead>
+            <tr>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <FiUser className='text-primary text-lg' />
+                  Recipant Name
+               </div>
+               </th>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <FaDisease className='text-primary text-lg' />
+                  Disease
+               </div>
+               </th>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <LuMapPin className='text-primary text-lg' />
+                  Area
+               </div>
+               </th>
+               <th className='border-b'>
+               <div className="flex gap-1 items-center text-sm">
+                  <IoCalendarClearSharp className='text-primary text-lg' />
+                  Donation Date
+               </div>
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td className='border-b'>Mark Neel</td>
+               <td className='border-b'>Road Accident</td>
+               <td className='border-b'>Mirpur, Dhaka</td>
+               <td className='border-b'>10/10/2024</td>
+            </tr>
+            <tr>
+               <td className='border-b'>Mark Neel</td>
+               <td className='border-b'>Road Accident</td>
+               <td className='border-b'>Mirpur, Dhaka</td>
+               <td className='border-b'>10/10/2024</td>
+            </tr>
+         </tbody>
+         </table>
+      </div>
+   </div>
+  )
 }

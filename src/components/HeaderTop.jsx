@@ -10,7 +10,7 @@ export default function HeaderTop() {
             <div className="">
                <Link href={`mailto:example@gmail.com`} className="inline-flex items-center gap-2">
                   <FaEnvelope />
-                  example@gmail.com
+                  admin@gmail.com
                </Link>
             </div>
             <div className="flex flex-wrap gap-2">
