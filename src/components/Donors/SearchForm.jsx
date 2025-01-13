@@ -1,5 +1,38 @@
+'use client'
+import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import districtData from '@/data/bd-districts.json'
 
 export default function SearchForm() {
+   const districts = getAllDistrict('en')
+   const upazilas = getAllUpazila("en");
+
+   const [selectedDistrict, setSelectedDistrict] = useState(null)
+   const [availableUpazilas, setAvailableUpazilas] = useState([])
+
+   // const handleDistrictChange = (e) => {
+   //    const districtValue = e.target.value
+   //    console.log(e.target)
+   //    setSelectedDistrict(districtValue)
+
+   //    const upazilasForDistrict = upazilas[districtValue] || [];
+   //    setAvailableUpazilas(upazilasForDistrict);
+   // };
+
+   // const {
+   //    register,
+   //    handleSubmit,
+   //    watch,
+   //    formState: { errors },
+   // } = useForm()
+
+   // const SubmitHandler = (data) => {
+   //    console.log({
+   //       ...data
+   //     });
+   // }
+   console.log(districtData)
 
    return (
       <div className='py-10 bg-red-100'>
@@ -23,26 +56,44 @@ export default function SearchForm() {
                   <div>
                      <label htmlFor="district" className="block mb-2 text-lg font-semibold">
                         District
+                        <span className="text-red-600 inline-block ml-1">*</span>
                      </label>
                      <select
+                        // {...register('district')}
                         id="district"
+                        // onChange={handleDistrictChange}
                         className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
                      >
                         <option value="">-- Select District --</option>
+                        {Object.values(districts).flatMap((districtArray) =>
+                           districtArray.map((district) => (
+                              <option key={district.value} onChange={() => setSelectedDistrict(district)}>
+                                 {district.title}
+                              </option>
+                           ))
+                        )}
                      </select>
                   </div>
 
                   {/* Upazila Dropdown */}
                   <div>
                      <label htmlFor="upazila" className="block mb-2 text-lg font-semibold">
-                        Thana / Upazila
+                        Upazila
+                        <span className="text-red-600 inline-block ml-1">*</span>
                      </label>
                      <select
+                        // {...register('upazila')}
                         name='upazila'
                         id="upazila"
                         className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
                      >
                         <option value="">-- Select Upazila --</option>
+                        {availableUpazilas &&
+                           availableUpazilas.map((upazila) => (
+                              <option key={upazila.value} value={upazila.value}>
+                                 {upazila.title}
+                              </option>
+                           ))}
                      </select>
                   </div>
                </div>
@@ -50,7 +101,7 @@ export default function SearchForm() {
                   Find Donors
                </button>
             </form>
-         </div>
-      </div>
+         </div >
+      </div >
    )
 }

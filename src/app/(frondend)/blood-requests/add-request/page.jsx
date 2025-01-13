@@ -6,8 +6,24 @@ import SocialLogin from '@/components/shared/SocialLogin';
 import { useForm } from 'react-hook-form';
 import PageHero from '@/components/shared/PageHero';
 import InputField from '@/components/shared/InputField';
+import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
+import { useState } from 'react';
 
-export default function AddRequest () {
+export default function AddRequest() {
+
+   const districts = getAllDistrict('en')
+   const upazilas = getAllUpazila("en");
+
+   const [selectedDistrict, setSelectedDistrict] = useState(null)
+   const [availableUpazilas, setAvailableUpazilas] = useState([])
+
+   const handleDistrictChange = (e) => {
+      const districtValue = e.target.value
+      setSelectedDistrict(districtValue)
+
+      const upazilasForDistrict = upazilas[districtValue] || [];
+      setAvailableUpazilas(upazilasForDistrict);
+   };
 
    const {
       register,
@@ -67,42 +83,50 @@ export default function AddRequest () {
                         }}
                      />
 
-                     <InputField
-                        name="district"
-                        label="District"
-                        type="select"
-                        register={register}
-                        validation={{ required: 'District is required.' }}
-                        errors={errors}
-                        options={[
-                           { value: 'A+', label: 'A+' },
-                           { value: 'A-', label: 'A-' },
-                           { value: 'B+', label: 'B+' },
-                           { value: 'B-', label: 'B-' },
-                           { value: 'AB+', label: 'AB+' },
-                           { value: 'AB-', label: 'AB-' },
-                           { value: 'O+', label: 'O+' },
-                           { value: 'O-', label: 'O-' },
-                        ]}
-                     />
-                     <InputField
-                        name="policestation"
-                        label="Thana / Upazila"
-                        type="select"
-                        register={register}
-                        validation={{ required: 'Thana / Upazila is required.' }}
-                        errors={errors}
-                        options={[
-                           { value: 'A+', label: 'A+' },
-                           { value: 'A-', label: 'A-' },
-                           { value: 'B+', label: 'B+' },
-                           { value: 'B-', label: 'B-' },
-                           { value: 'AB+', label: 'AB+' },
-                           { value: 'AB-', label: 'AB-' },
-                           { value: 'O+', label: 'O+' },
-                           { value: 'O-', label: 'O-' },
-                        ]}
-                     />
+                     {/* district dropdown */}
+                     <div>
+                        <label htmlFor="district" className="block mb-2 text-lg font-semibold">
+                           District
+                           <span className="text-red-600 inline-block ml-1">*</span>
+                        </label>
+                        <select
+                           {...register('district')}
+                           id="district"
+                           onChange={handleDistrictChange}
+                           className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
+                        >
+                           <option value="">-- Select District --</option>
+                           {Object.values(districts).flatMap((districtArray) =>
+                              districtArray.map((district) => (
+                                 <option key={district.value} value={district.value}>
+                                    {district.title}
+                                 </option>
+                              ))
+                           )}
+                        </select>
+                     </div>
+
+                     {/* Upazila Dropdown */}
+                     <div>
+                        <label htmlFor="upazila" className="block mb-2 text-lg font-semibold">
+                           Upazila
+                           <span className="text-red-600 inline-block ml-1">*</span>
+                        </label>
+                        <select
+                           {...register('upazila')}
+                           name='upazila'
+                           id="upazila"
+                           className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
+                        >
+                           <option value="">-- Select Upazila --</option>
+                           {availableUpazilas &&
+                              availableUpazilas.map((upazila) => (
+                                 <option key={upazila.value} value={upazila.value}>
+                                    {upazila.title}
+                                 </option>
+                              ))}
+                        </select>
+                     </div>
 
                      <InputField
                         name={'area'}
