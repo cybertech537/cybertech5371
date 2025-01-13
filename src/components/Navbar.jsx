@@ -8,7 +8,6 @@ import DisplayProfile from './shared/DisplayProfile';
 import { useAuth } from '@/services/AuthProvider';
 
 export default function Navbar() {
-const {user} = useAuth()
 
 
    return (
