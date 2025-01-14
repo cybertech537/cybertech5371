@@ -9,12 +9,15 @@ import { useAuth } from '@/services/AuthProvider';
 
 export default function Navbar() {
 
+   const { user } = useAuth()
+
+   console.log(user)
 
    return (
       <>
          <div className="sticky top-0 left-0 w-full z-30 bg-white shadow-md">
             <div className="container">
-               <div className="navbar bg-base-100 px-0 py-4">
+               <div className="navbar bg-base-100 px-0 py-2">
                   <div className="navbar-start">
                      {/* brand logo */}
                      <Logo path={'/'} />
@@ -27,11 +30,16 @@ export default function Navbar() {
                      </ul>
                   </div>
                   <div className="navbar-end items-center gap-3">
-                     <div className="flex gap-3 items-center flex-wrap">
-                        <Link href={'/login'} className="btn bg-black text-white hover:bg-primary hidden sm:inline-flex py-1.5">Register</Link>
-                        <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
-                     </div>
-                     <DisplayProfile />
+                     {
+                        user && user?.name ?
+                           <DisplayProfile />
+                           :
+
+                           <div className="flex gap-3 items-center flex-wrap">
+                              <Link href={'/signup'} className="btn bg-black text-white hover:bg-primary hidden sm:inline-flex py-1.5">Register</Link>
+                              <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
+                           </div>
+                     }
                      <label htmlFor='mobile-menu-drawer' className="inline-block cursor-pointer lg:hidden">
                         <RiMenu2Line className='text-3xl' />
                      </label>

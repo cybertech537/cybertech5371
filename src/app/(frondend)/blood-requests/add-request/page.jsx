@@ -11,18 +11,30 @@ import { useState } from 'react';
 
 export default function AddRequest() {
 
-   const districts = getAllDistrict('en')
+   const districts = getAllDistrict('en');
    const upazilas = getAllUpazila("en");
 
-   const [selectedDistrict, setSelectedDistrict] = useState(null)
-   const [availableUpazilas, setAvailableUpazilas] = useState([])
+   const [selectedDistrict, setSelectedDistrict] = useState({ title: '', code: '' });
+   const [selectedUpazila, setSelectedUpazila] = useState('');
+   const [availableUpazilas, setAvailableUpazilas] = useState([]);
 
    const handleDistrictChange = (e) => {
-      const districtValue = e.target.value
-      setSelectedDistrict(districtValue)
+      const districtValue = e.target.value;
+      // Find the selected district object from the list
 
+      const district = Object.values(districts)  // Get an array of arrays from the object
+         .flatMap((districtArray) => districtArray)  // Flatten the arrays into a single array
+         .find((d) => d.value === +districtValue);  // Find the district by value
+      setSelectedDistrict(district || { title: '', code: '' });
+
+
+      // Fetch upazilas for the selected district
       const upazilasForDistrict = upazilas[districtValue] || [];
       setAvailableUpazilas(upazilasForDistrict);
+   };
+
+   const handleUpazilaChange = (e) => {
+      setSelectedUpazila(e.target.value);
    };
 
    const {
@@ -31,7 +43,15 @@ export default function AddRequest() {
       watch,
       formState: { errors },
    } = useForm()
-   const SubmitHandler = (data) => console.log(data)
+   const SubmitHandler = (data) => {
+      const finalData = {
+         ...data,
+         district: selectedDistrict.title,
+         upazila: selectedUpazila
+      };
+      console.log(finalData)
+
+   }
 
    return (
       <div className="bg-gray-50 pb-14">
@@ -90,7 +110,6 @@ export default function AddRequest() {
                            <span className="text-red-600 inline-block ml-1">*</span>
                         </label>
                         <select
-                           {...register('district')}
                            id="district"
                            onChange={handleDistrictChange}
                            className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
@@ -113,15 +132,15 @@ export default function AddRequest() {
                            <span className="text-red-600 inline-block ml-1">*</span>
                         </label>
                         <select
-                           {...register('upazila')}
-                           name='upazila'
+                           name="upazila"
                            id="upazila"
+                           onChange={handleUpazilaChange}
                            className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
                         >
                            <option value="">-- Select Upazila --</option>
                            {availableUpazilas &&
                               availableUpazilas.map((upazila) => (
-                                 <option key={upazila.value} value={upazila.value}>
+                                 <option key={upazila.title} value={upazila.title}>
                                     {upazila.title}
                                  </option>
                               ))}

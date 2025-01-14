@@ -130,24 +130,25 @@ export default function DonorDetail() {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {
-                donor?.donationHistory?.map((history)=>
-              <tr key={history?._id}>
-                <td className='border-b'>{donor?.name}</td>
-                <td className='border-b'>Road Accident</td>
-                <td className='border-b'>{donor?.address?.upazila}, {donor?.address?.district}</td>
-                <td className='border-b'><DateFormate item={history}/></td>
-              </tr>
-              )
+            {
+              donor?.donationHistory?.length > 0 ?
+                <tbody>
+                  {
+                    donor?.donationHistory?.map((history) =>
+                      <tr key={history?._id}>
+                        <td className='border-b'>{donor?.name}</td>
+                        <td className='border-b'>Road Accident</td>
+                        <td className='border-b'>{donor?.address?.upazila}, {donor?.address?.district}</td>
+                        <td className='border-b'><DateFormate item={history} /></td>
+                      </tr>
+                    )
+                  }
+                </tbody> :
+
+                <tr>
+                  <td colSpan={4} className='text-center border-b'>Donation history is empty</td>
+                </tr>
             }
-              {/* <tr>
-                <td className='border-b'>Mark Neel</td>
-                <td className='border-b'>Road Accident</td>
-                <td className='border-b'>Mirpur, Dhaka</td>
-                <td className='border-b'>10/10/2024</td>
-              </tr> */}
-            </tbody>
           </table>
         </div>
       </div>

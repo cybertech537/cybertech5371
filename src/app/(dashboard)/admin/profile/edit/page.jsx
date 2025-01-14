@@ -3,8 +3,11 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import InputField from '@/components/shared/InputField';
+import { useAuth } from '@/services/AuthProvider';
 
 export default function Profile() {
+
+   const { user } = useAuth();
 
    const {
       register,
@@ -19,29 +22,34 @@ export default function Profile() {
          <form onSubmit={handleSubmit(SubmitHandler)} className='space-y-10'>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
-               <InputField
-                  name={'fullname'}
-                  label={'Full Name'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Full Name'}
-                  validation={{ required: 'Name can not be empty.' }} />
 
-               <InputField
-                  name={'email'}
-                  type={'email'}
-                  label={'Email'}
-                  errors={errors}
-                  register={register}
-                  placeholder={'Enter email'}
-                  validation={{
-                     pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                        message: 'Invalid email address.',
-                     }
-                  }} />
+               <div>
+                  <label className="block font-medium mb-1">Name <span className="text-red-500">*</span></label>
+                  <input
+                     {...register("name", { required: "Name is required" })}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter name"
+                  />
+                  {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+               </div>
 
-               <InputField
+               <div>
+                  <label className="block font-medium mb-1">Email</label>
+                  <input
+                     {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                           value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                           message: "Please enter a valid email address",
+                        },
+                     })}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter email"
+                  />
+                  {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+               </div>
+
+               {/* <InputField
                   name={'contact'}
                   label={'Contact'}
                   errors={errors}
@@ -53,23 +61,25 @@ export default function Profile() {
                         value: /^(?:\+88|0088)?01[3-9]\d{8}$|^(?:\+88|0088)?0\d{8,10}$/,
                         message: 'Invalid contact number.',
                      }
-                  }} />
+                  }} /> */}
 
-               <InputField
-                  name={'password'}
-                  label={'Password'}
-                  type={'password'}
-                  errors={errors}
-                  register={register}
-                  validation={{
-                     required: 'Password can not be empty.',
-                     pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                        message: "Password must be at least 8 characters long, include one letter, one number, and one special character."
-                     }
-                  }} />
+               <div>
+                  <label className="block font-medium mb-1">Contact</label>
+                  <input
+                     {...register("phone", {
+                        required: "Phone number is required",
+                        pattern: {
+                           value: /^(?:\+88|0088)?01[3-9]\d{8}$|^(?:\+88|0088)?0\d{8,10}$/,
+                           message: 'Invalid contact number.',
+                        },
+                     })}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter phone number"
+                  />
+                  {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
+               </div>
 
-               <InputField
+               {/* <InputField
                   name="bloodGroup"
                   label="Blood Group"
                   type="select"
@@ -86,9 +96,23 @@ export default function Profile() {
                      { value: 'O+', label: 'O+' },
                      { value: 'O-', label: 'O-' },
                   ]}
-               />
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Blood group</label>
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none" {...register("bloodGroup", { required: "Blood group is required." })}>
+                     {/* <option defaultValue="Available">Available</option> */}
+                     <option value="A+">A+</option>
+                     <option value="A-">A-</option>
+                     <option value="B+">B+</option>
+                     <option value="B-">B-</option>
+                     <option value="AB+">AB+</option>
+                     <option value="AB-">AB-</option>
+                     <option value="O+">O+</option>
+                     <option value="O-">O-</option>
+                  </select>
+               </div>
 
-               <div className="">
+               {/* <div className="">
                   <InputField
                      name={'lastDonationDate'}
                      label={'Last Donation Date'}
@@ -97,10 +121,19 @@ export default function Profile() {
                      register={register}
                      validation={{}} // No 'required' rule here
                   />
+               </div> */}
+               <div>
+                  <label className="block font-medium mb-1">Last Donation Date</label>
+                  <input
+                     type="date"
+                     {...register("lastDonationDate")}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                  />
+                  {errors.lastDonationDate && <p className="text-red-500">{errors.lastDonationDate.message}</p>}
                </div>
 
                {/* Age (Optional) */}
-               <InputField
+               {/* <InputField
                   name={'age'}
                   label={'Age'}
                   type={'number'}
@@ -114,7 +147,22 @@ export default function Profile() {
                         message: 'Age must be between 18 and 99.',
                      },
                   }}
-               />
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Age</label>
+                  <input
+                     {...register("age", {
+                        required: "Age is required",
+                        pattern: {
+                           value: /^[1-9][0-9]?$/,
+                           message: 'Age must be between 18 and 99.',
+                        }
+                     })}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter age"
+                  />
+                  {errors.age && <p className="text-red-500">{errors.age.message}</p>}
+               </div>
 
                <InputField
                   name="district"
@@ -154,63 +202,109 @@ export default function Profile() {
                />
 
                {/* Address (Optional) */}
-               <InputField
+               {/* <InputField
                   name={'address'}
                   label={'Address'}
                   errors={errors}
                   register={register}
                   placeholder={'Your Address'}
                   validation={{}} // No 'required' rule here
-               />
+               /> */}
 
-               {/* Availability (Optional) */}
-               <InputField
-                  name={'donated_to'}
-                  label={'Donated To'}
-                  placeholder={'Search the recipient by contact number'}
-                  errors={errors}
-                  register={register}
-               />
+               <div>
+                  <label className="block font-medium mb-1">Area</label>
+                  <input
+                     {...register("address.area")}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter area"
+                  />
+                  {errors.address?.area && <p className="text-red-500">{errors.address?.area.message}</p>}
+               </div>
 
                {/* Preferred Donation Location (Optional) */}
-               <InputField
+               {/* <InputField
                   name={'occupation'}
                   label={'Job / Profession'}
                   errors={errors}
                   register={register}
                   placeholder={'Occupation'}
                   validation={{}} // No 'required' rule here
-               />
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Job / Profession</label>
+                  <input
+                     {...register("occupation", { required: "occupation is required" })}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter name"
+                  />
+                  {errors.occupation && <p className="text-red-500">{errors.occupation.message}</p>}
+               </div>
 
-               <InputField
+               {/* <InputField
                   name={'instagram'}
                   label={'Instagram URL'}
                   errors={errors}
                   register={register}
                   validation={{}} // No 'required' rule here
-               />
-               <InputField
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Instagram URL</label>
+                  <input
+                     {...register("socialMedia.instagram")}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter name"
+                  />
+               </div>
+
+               {/* <InputField
                   name={'facebook'}
                   label={'Facebook URL'}
                   errors={errors}
                   register={register}
                   validation={{}} // No 'required' rule here
-               />
-               <InputField
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Facebook URL</label>
+                  <input
+                     {...register("socialMedia.facebook")}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter name"
+                  />
+               </div>
+
+               {/* <InputField
                   name={'twitter'}
                   label={'Twitter URL'}
                   errors={errors}
                   register={register}
                   validation={{}} // No 'required' rule here
-               />
-               <InputField
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Twitter URL</label>
+                  <input
+                     {...register("socialMedia.twitter")}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                     placeholder="Enter name"
+                  />
+               </div>
+
+               {/* <InputField
                   type='file'
                   name={'profileImage'}
                   label={'Profile Image'}
                   errors={errors}
                   register={register}
                   validation={{}} // No 'required' rule here
-               />
+               /> */}
+               <div>
+                  <label className="block font-medium mb-1">Profile Image</label>
+                  <input
+                  type="file"
+                     {...register("image")}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring focus:ring-primary focus:outline-none"
+                  />
+                  {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+               </div>
 
             </div>
 
