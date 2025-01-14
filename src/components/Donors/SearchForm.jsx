@@ -2,7 +2,7 @@
 import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
 import { useState } from 'react';
 
-export default function SearchForm() {
+export default function SearchForm({ onSearch }) {
    const districts = getAllDistrict('en');
    const upazilas = getAllUpazila("en");
 
@@ -35,6 +35,11 @@ export default function SearchForm() {
          district: selectedDistrict.title,
          upazila: selectedUpazila
       };
+      onSearch({
+         bloodGroup: e.target.bloodGroup.value,
+         district: selectedDistrict.title,
+         upazila: selectedUpazila,
+       });
       console.log("Selected Data:", result);
    };
 

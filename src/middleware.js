@@ -17,42 +17,42 @@ export async function middleware(req) {
  
   const accessToken = cookies['agreeToken'];
 
-  if (isProtectedRoute) {
-    if (!accessToken) {
-      // Redirect to login if not authenticated
-      return NextResponse.redirect(new URL('/login', req.url));
-    }
+  // if (isProtectedRoute) {
+  //   if (!accessToken) {
+  //     // Redirect to login if not authenticated
+  //     return NextResponse.redirect(new URL('/login', req.url));
+  //   }
 
-    try {
-      // Verify user with your backend
-      const response = await fetch('http://localhost:5050/api/user/v1/me', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+  //   try {
+  //     // Verify user with your backend
+  //     const response = await fetch('http://localhost:5050/api/user/v1/me', {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
 
-     if (!response.ok) {
-        return NextResponse.redirect(new URL('/login', req.url));
-      }
+  //    if (!response.ok) {
+  //       return NextResponse.redirect(new URL('/login', req.url));
+  //     }
 
-      const user = await response.json();
-      console.log(user,'user');
-      if(!user){
-        return NextResponse.redirect(new URL('/login', req.url));
-      }
+  //     const user = await response.json();
+  //     console.log(user,'user');
+  //     if(!user){
+  //       return NextResponse.redirect(new URL('/login', req.url));
+  //     }
 
-      // if (user.role !== 'admin' && pathname.startsWith('/admin')) {
-      //   return NextResponse.redirect(new URL('/login', req.url));
-      // }
+  //     // if (user.role !== 'admin' && pathname.startsWith('/admin')) {
+  //     //   return NextResponse.redirect(new URL('/login', req.url));
+  //     // }
 
-      req.user = user; // Add user data for logging or additional checks
-      console.log('Authenticated user:', user); // Logs in terminal
+  //     req.user = user; // Add user data for logging or additional checks
+  //     console.log('Authenticated user:', user); // Logs in terminal
 
-      return NextResponse.next();
-    } catch (error) {
-      return NextResponse.redirect(new URL('/login', req.url));
-    }
-  }
+  //     return NextResponse.next();
+  //   } catch (error) {
+  //     return NextResponse.redirect(new URL('/login', req.url));
+  //   }
+  // }
 
   return NextResponse.next();
 }
