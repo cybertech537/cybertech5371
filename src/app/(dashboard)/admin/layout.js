@@ -3,6 +3,7 @@ import Aside from "@/components/Dashboard/Aside";
 import "../../globals.css";
 // import AuthProvider from "@/services/AuthProvider";
 import Navbar from "@/components/Dashboard/Navbar";
+import { AuthProvider } from "@/services/AuthProvider";
 
 export const metadata = {
    title: "Donor Bridge",
@@ -13,7 +14,7 @@ export default function AdminLayout({ children }) {
    return (
       <html lang="en">
          <body>
-            {/* <AuthProvider> */}
+            <AuthProvider>
                <div className="flex">
                   <Aside />
                   {/* Main Content */}
@@ -22,7 +23,7 @@ export default function AdminLayout({ children }) {
                      {children}
                   </main>
                </div>
-            {/* </AuthProvider> */}
+            </AuthProvider>
          </body>
       </html>
    );

@@ -11,14 +11,21 @@ export const AuthProvider = ({ children }) => {
    useEffect(() => {
       const token = document.cookie
          .split('; ')
-         .find((row) => row.startsWith('token='))
+         .find((row) => row.startsWith('agreeToken='))
          ?.split('=')[1];
-
+console.log(token)
       if (token) {
          try {
-            const decodedUser = jwtDecode(token);
-            console.log(decodedUser);
-            setUser(decodedUser);
+            fetch('http://localhost:5050/api/user/v1/me', {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             }).then(res=>res.json())
+             .then(data=>
+               setUser(data?.details))
+            // const decodedUser = jwtDecode(token);
+            // console.log(decodedUser);
+            // setUser(decodedUser);
          } catch (error) {
             console.error('Invalid token:', error);
          }
@@ -34,5 +41,8 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
    const context = useContext(AuthContext);
+   if (!context) {
+      throw new Error('useAuth must be used within an AuthProvider');
+    }
    return context;
 };

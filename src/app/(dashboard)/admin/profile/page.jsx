@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -6,8 +7,18 @@ import { GiHeartDrop } from 'react-icons/gi'
 import { FaDisease } from 'react-icons/fa6'
 import { IoCalendarClearSharp } from 'react-icons/io5'
 import { LuMapPin } from 'react-icons/lu'
+import { useAuth } from '@/services/AuthProvider'
 
 export default function DonorDetail() {
+
+   const { user } = useAuth();
+
+   console.log(user, 'user')
+
+   if (!user) {
+      return <p>Loading user information...</p>;
+    }
+
   return (
    <div className="">
       <div className="">
