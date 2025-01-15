@@ -13,7 +13,7 @@ export default function BloodRequestCard() {
          </div>
          <div className="text-lg flex gap-1 items-center">
             <LuMapPin className='text-primary text-xl mr-1' />
-            District, Thana
+            Pabna, Ishwardi
          </div>
          <div className="text-lg flex gap-1 items-center">
             <FaDisease className='text-primary text-xl mr-1' />
@@ -21,7 +21,7 @@ export default function BloodRequestCard() {
          </div>
          <div className="text-lg flex gap-1 items-center">
             <IoCalendarClearSharp className='text-primary text-xl mr-1' />
-            10 Oct, 2024
+            17 Jan, 2025
          </div>
       </div>
    )
