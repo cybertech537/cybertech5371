@@ -8,6 +8,9 @@ import PageHero from '@/components/shared/PageHero';
 import InputField from '@/components/shared/InputField';
 import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
 import { useState } from 'react';
+import axios from 'axios';
+import { serverUrl } from '@/config/api';
+import toast from 'react-hot-toast';
 
 export default function AddRequest() {
 
@@ -41,15 +44,31 @@ export default function AddRequest() {
       register,
       handleSubmit,
       watch,
+      reset,
       formState: { errors },
    } = useForm()
-   const SubmitHandler = (data) => {
+   const SubmitHandler = async(data) => {
+      const bearerToken = localStorage.getItem('agreeToken')
+      const config = {
+         headers: {
+           Authorization: `Bearer ${bearerToken}`,
+           'Content-Type': 'application/json'
+         }
+       };
       const finalData = {
          ...data,
          district: selectedDistrict.title,
          upazila: selectedUpazila
       };
-      console.log(finalData)
+      const response = await axios.post(`${serverUrl}api/request/v1/create`,finalData,config);
+      console.log(response.data);
+      if(response.data?.details){
+reset()
+alert('New Request Created Successfully')
+         toast.success(response?.data?.msg || 'New Request Created')
+      }else{
+         toast.error('please Try Again')
+      }
 
    }
 

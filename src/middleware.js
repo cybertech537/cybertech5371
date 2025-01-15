@@ -5,7 +5,7 @@ export async function middleware(req) {
   const { pathname } = req.nextUrl;
 
   // Define routes that require authentication
-  const protectedRoutes = ['/admin', '/dashboard'];
+  const protectedRoutes = ['/admin', '/dashboard', '/blood-requests','/donors/'];
 
   // Check if the user is trying to access a protected route
   const isProtectedRoute = protectedRoutes.some((route) =>
@@ -58,5 +58,6 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/donors/:path*'],
+  matcher: ['/admin/:path*', '/donors/:path*', '/blood-requests/:path*', '/dashboard/:path*']
 };
+
