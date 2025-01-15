@@ -48,7 +48,7 @@ export default function DonorDetail() {
                            Contact
                         </div>
                         <div className="font-bold">
-                           <Link href={'tel:01953182201'}>01953182201</Link>
+                           <Link href={`tel:${user?.phone}`}>{user?.phone}</Link>
                         </div>
                      </div>
                      <div className="">
@@ -69,7 +69,7 @@ export default function DonorDetail() {
                         <div className="uppercase text-gray-600 mb-2 text-base">
                            Occupation
                         </div>
-                        <div className="font-bold">Student</div>
+                        <div className="font-bold">{user?.occupation}</div>
                      </div>
                      <div className="">
                         <div className="uppercase text-gray-600 mb-2 text-base">

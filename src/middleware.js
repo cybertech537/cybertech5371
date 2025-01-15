@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import cookie from 'cookie'; // Install with: npm install cookie
+import { serverUrl } from '@/config/api';
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -25,7 +26,7 @@ export async function middleware(req) {
 
     try {
       // Verify user with your backend
-      const response = await fetch('http://localhost:5050/api/user/v1/me', {
+      const response = await fetch(`${serverUrl}api/user/v1/me`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
