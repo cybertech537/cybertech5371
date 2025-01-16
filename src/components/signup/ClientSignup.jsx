@@ -237,7 +237,8 @@ export default function ClientSignup() {
                      }}
                   />
 
-                  <label className="text-base mt-5 block">
+                  <label className="text-base mt-5 flex items-center gap-1">
+                     <input type="checkbox" name="" id="" />
                      <span>
                         I agree to <Link href={'/terms-and-conditions'} className='text-primary'>terms and conditions</Link>.
                      </span>
