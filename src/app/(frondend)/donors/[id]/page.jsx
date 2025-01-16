@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
-import { FiFacebook, FiLinkedin, FiTwitter, FiUser } from 'react-icons/fi'
+import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter, FiUser } from 'react-icons/fi'
 import { GiHeartDrop } from 'react-icons/gi'
 import { FaDisease } from 'react-icons/fa6'
 import { IoCalendarClearSharp } from 'react-icons/io5'
@@ -11,6 +11,7 @@ import { serverUrl } from '@/config/api'
 import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import DateFormate from '@/components/dateformate/DateFormate';
+import Loader from '@/components/loader/Loader';
 
 export default function DonorDetail() {
 
@@ -40,7 +41,7 @@ export default function DonorDetail() {
 
   console.log(donor)
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader/>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -58,9 +59,18 @@ export default function DonorDetail() {
                 Blood Donation Fighter
               </div>
               <div className="flex flex-wrap gap-4 text-2xl mt-4 text-primary">
-                <Link href={'https://facebook.com'} target='_blank'><FiLinkedin /></Link>
-                <Link href={'https://facebook.com'} target='_blank'><FiFacebook /></Link>
-                <Link href={'https://facebook.com'} target='_blank'><FiTwitter /></Link>
+                {
+                  donor?.socialMedia?.facebook &&
+                  <Link href={donor?.socialMedia?.facebook} target='_blank'><FiFacebook /></Link>
+                }
+                {
+                  donor?.socialMedia?.instagram &&
+                  <Link href={donor?.socialMedia?.instagram} target='_blank'><FiInstagram /></Link>
+                }
+                {
+                  donor?.socialMedia?.twitter &&
+                  <Link href={donor?.socialMedia?.twitter} target='_blank'><FiTwitter /></Link>
+                }
               </div>
               <div className="text-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
                 <div className="">
@@ -84,6 +94,12 @@ export default function DonorDetail() {
                   <div className="font-bold">
                     {donor?.address?.upazila}, {donor?.address?.district}
                   </div>
+                </div>
+                <div className="">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                    Occupation
+                  </div>
+                  <div className="font-bold">{donor?.occupation}</div>
                 </div>
                 <div className="">
                   <div className="uppercase text-gray-600 mb-2 text-base">

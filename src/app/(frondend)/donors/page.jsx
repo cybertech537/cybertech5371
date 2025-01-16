@@ -8,6 +8,9 @@ import { FaArrowDownLong, FaArrowUpLong } from 'react-icons/fa6';
 import { TbUserHeart } from 'react-icons/tb';
 import axios from 'axios';
 import { serverUrl } from '@/config/api';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/services/AuthProvider';
+import Swal from 'sweetalert2';
 
 export default function Page() {
   const [donors, setDonors] = useState([]);
@@ -19,6 +22,67 @@ export default function Page() {
     district: '',
     upazila: '',
   });
+  const { user } = useAuth()
+
+  const router = useRouter()
+
+  const handleNavigate = (id) => {
+    // const router = useRouter();
+    console.log(user)
+    if (!user) {
+      Swal.fire({
+        title: "Access Restricted",
+        text: "You need to log in to access this feature. Do you want to go to the login page?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, go to login!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Swal.fire({
+          //   title: "Redirecting!",
+          //   text: "Navigating to the login page.",
+          //   icon: "success",
+          // }).then(() => {
+          // });
+          router.push("/login");
+        }
+      });
+      return;
+    }
+
+    if (user?.name) {
+      const { district, upazila } = user.address || {};
+      const { bloodGroup } = user;
+
+      if (!district || !upazila || !bloodGroup) {
+        Swal.fire({
+          title: "Missing Information",
+          text: "Please add your district, upazila, and blood group before proceeding.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Add information",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Swal.fire({
+            //   title: "Redirecting!",
+            //   text: "Navigating to the login page.",
+            //   icon: "success",
+            // }).then(() => {
+            // });
+            router.push("/admin/profile/edit");
+          }
+        });
+        return;
+      }
+
+      // Navigate to donor details if all required fields are present
+      router.push(`/donors/${id}`);
+    }
+  };
 
   const fetchDonors = async (params = {}) => {
     try {
@@ -57,10 +121,11 @@ export default function Page() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {visibleDonors.length > 0 ? (
               visibleDonors.map((donor, index) => (
-                <Link
-                  href={`/donors/${donor._id}`}
+                <div
+                  onClick={() => handleNavigate(donor?._id)}
+                  // href={`/donors/${donor._id}`}
                   key={index}
-                  className="flex flex-wrap gap-4 bg-white shadow-md p-5"
+                  className="flex flex-wrap gap-4 bg-white shadow-md p-5 cursor-pointer"
                 >
                   <div className="flex-1">
                     <ul className="text-lg">
@@ -81,7 +146,7 @@ export default function Page() {
                     </ul>
                   </div>
                   <TbUserHeart className="text-7xl text-primary" />
-                </Link>
+                </div>
               ))
             ) : (
               <p className="text-center col-span-full text-gray-500">

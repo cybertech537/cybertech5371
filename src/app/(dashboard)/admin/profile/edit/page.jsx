@@ -8,6 +8,7 @@ import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
 import { useState } from 'react';
 import { serverUrl } from '@/config/api';
 import toast, { Toaster } from 'react-hot-toast';
+import Loader from '@/components/loader/Loader';
 
 
 export default function Profile() {
@@ -60,8 +61,18 @@ export default function Profile() {
       formData.append("socialMedia[instagram]", data.socialMedia?.instagram || "");
       formData.append("socialMedia[facebook]", data.socialMedia?.facebook || "");
       formData.append("socialMedia[twitter]", data.socialMedia?.twitter || "");
-      formData.append("address[district]", selectedDistrict.title);
-      formData.append("address[upazila]", selectedUpazila);
+      if(!selectedDistrict.title){
+         formData.append("address[district]", user?.address?.district);
+      }else{
+         formData.append("address[district]", selectedDistrict.title);
+
+      }
+
+      if(!selectedUpazila){
+         formData.append("address[upazila]", user?.address?.upazila);
+      }else{
+         formData.append("address[upazila]", selectedUpazila);
+      }
       formData.append("address[area]", data.address?.area || "");
 
       // Append the image file if it exists
@@ -100,6 +111,7 @@ export default function Profile() {
       }
    };
 
+if(!user)return <Loader/>
 
    return (
       <div className="bg-white p-5 shadow max-w-7xl">

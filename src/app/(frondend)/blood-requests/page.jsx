@@ -14,8 +14,9 @@ export default function BloodRequest() {
     try {
       const response = await axios.get(`${serverUrl}api/request/v1/`);
       const fetchedDonors = response?.data?.data || [];
-      console.log(response);
-      setDonors(fetchedDonors);
+      const filteredDonors = fetchedDonors.filter(donor => !donor.isReceived); // Filter where isReceived is false
+      console.log(filteredDonors);
+      setDonors(filteredDonors);
     } catch (error) {
       console.error('Error fetching donors:', error);
     }
@@ -28,12 +29,12 @@ export default function BloodRequest() {
   return (
     <div className='pb-20'>
       <div className="relative bg-black/70 pt-24 pb-40">
-        <Image 
-          src={'/img/bed-ward.jpg'} 
-          height={400} 
-          width={1920} 
-          alt='bed-ward' 
-          className='absolute h-full w-full left-0 top-0 object-cover -z-10' 
+        <Image
+          src={'/img/bed-ward.jpg'}
+          height={400}
+          width={1920}
+          alt='bed-ward'
+          className='absolute h-full w-full left-0 top-0 object-cover -z-10'
         />
         <div className="container relative text-center">
           <div className="text-primary uppercase font-bold mb-5 text-xl">Donor Bridge</div>
@@ -45,8 +46,8 @@ export default function BloodRequest() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5">
             {donors?.length > 0 ? (
               donors.map((item, index) => (
-                <div 
-                  key={item._id || index} 
+                <div
+                  key={item._id || index}
                   className="border border-gray-300 p-4 rounded-md hover:shadow-md"
                 >
                   <Link href={`/blood-requests/${item?._id}`}>
