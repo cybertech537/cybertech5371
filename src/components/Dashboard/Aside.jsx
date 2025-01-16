@@ -8,9 +8,11 @@ import { MdManageHistory, MdOutlineAccountCircle, MdOutlineDashboard } from "rea
 import { GiHeartDrop } from "react-icons/gi";
 import { BiDonateBlood } from "react-icons/bi";
 import Link from "next/link";
+import { FaHeartCirclePlus } from 'react-icons/fa6';
+import { useAuth } from '@/services/AuthProvider';
 
 export default function Aside() {
-
+   const { user } = useAuth()
    const pathname = usePathname()
 
    return (
@@ -28,6 +30,15 @@ export default function Aside() {
                      </Link>
                   </li>
                )}
+               {
+                  user?.role === "Admin" &&
+                  <li>
+                     <Link href='/admin/allBloodRequest' className={`flex items-center gap-2 py-3 px-4 ${'/admin/allBloodRequest' === pathname && 'text-primary bg-primary/10'}`}>
+                        <FaHeartCirclePlus className='text-2xl text-primary' />
+                        All Blood Request
+                     </Link>
+                  </li>
+               }
 
             </ul>
          </nav>
@@ -55,5 +66,10 @@ const links = [
       label: "All Donors",
       path: "/admin/donors",
       icon: <GiHeartDrop className='text-2xl text-primary' />
+   },
+   {
+      label: "Blood Requests",
+      path: "/admin/bloodRequest",
+      icon: <FaHeartCirclePlus className='text-2xl text-primary' />
    }
 ]

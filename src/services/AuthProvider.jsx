@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
+import { serverUrl } from '@/config/api';
 
 const AuthContext = createContext();
 
@@ -9,27 +10,46 @@ export const AuthProvider = ({ children }) => {
    const [user, setUser] = useState(null);
 
    useEffect(() => {
+
+   }, []);
+
+   const fetchUserData = async () => {
       const token = document.cookie
          .split('; ')
-         .find((row) => row.startsWith('token='))
+         .find((row) => row.startsWith('agreeToken='))
          ?.split('=')[1];
-
+      console.log(token)
       if (token) {
          try {
-            const decodedUser = jwtDecode(token);
-            setUser(decodedUser);
+            fetch(`${serverUrl}api/user/v1/me`, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }).then(res => res.json())
+               .then(data =>
+                  setUser(data?.details))
+            // const decodedUser = jwtDecode(token);
+            // console.log(decodedUser);
+            // setUser(decodedUser);
          } catch (error) {
             console.error('Invalid token:', error);
          }
       }
+   };
+
+   // Call fetchUserData on component mount
+   useEffect(() => {
+      fetchUserData();
    }, []);
 
+   const refetchUser = () => fetchUserData();
+
    return (
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, refetchUser }}>
          {children}
       </AuthContext.Provider>
    );
-};
+}; ``
 
 export const useAuth = () => {
    const context = useContext(AuthContext);
