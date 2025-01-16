@@ -12,6 +12,7 @@ import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import DateFormate from '@/components/dateformate/DateFormate';
 import Loader from '@/components/loader/Loader';
+import moment from 'moment';
 
 export default function DonorDetail() {
 
@@ -41,7 +42,7 @@ export default function DonorDetail() {
 
   console.log(donor)
 
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
   if (error) return <p>{error}</p>;
 
   return (
@@ -106,7 +107,7 @@ export default function DonorDetail() {
                     Total Donation
                   </div>
                   <div className="font-bold">
-                    {donor?.donationCount} times
+                    {donor?.donationHistory?.length} times
                   </div>
                 </div>
               </div>
@@ -148,23 +149,25 @@ export default function DonorDetail() {
             </thead>
             {
               donor?.donationHistory?.length > 0 ?
-                <tbody>
+                <>
                   {
                     donor?.donationHistory?.map((history) =>
                       <tr key={history?._id}>
-                        <td className='border-b'>{donor?.name}</td>
-                        <td className='border-b'>Road Accident</td>
-                        <td className='border-b'>{donor?.address?.upazila}, {donor?.address?.district}</td>
-                        <td className='border-b'><DateFormate item={history} /></td>
+                        <td className='border-b'>{history?.recipientId?.name}</td>
+                        <td className='border-b'>{history?.disease}</td>
+                        <td className='border-b'>{history?.area}</td>
+                        {/* <td className='border-b'>{user?.address?.upazila}, {user?.address?.district}</td> */}
+                        <td className='border-b'>{moment(history?.donationDate).format('MMMM Do YYYY')}</td>
                       </tr>
                     )
                   }
-                </tbody> :
+                </> :
 
                 <tr>
                   <td colSpan={4} className='text-center border-b'>Donation history is empty</td>
                 </tr>
             }
+
           </table>
         </div>
       </div>

@@ -82,8 +82,8 @@ export default function ClientLogin() {
          console.log('result: ', result)
          document.cookie = `accessToken=${result?.token}; path=/; secure;  SameSite=Strict; max-age=3600`;
 
-            document.cookie = `accessToken=${result?.token}; path=/; secure; SameSite=Strict; max-age=3600`;
-          
+         document.cookie = `accessToken=${result?.token}; path=/; secure; SameSite=Strict; max-age=3600`;
+
          if (response.ok) {
 
             localStorage.setItem("agreeToken", result.token);
@@ -97,7 +97,7 @@ export default function ClientLogin() {
                // Store the user details in localStorage as a single object
                const userDetails = userResponse.data.details;
 
-document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; max-age=3600`; // Example: Token valid for 1 hour
+               document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; max-age=3600`; // Example: Token valid for 1 hour
 
 
                localStorage.setItem("userData", JSON.stringify(userDetails));
@@ -191,16 +191,25 @@ document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; 
             </form>
          ) : (
             <form onSubmit={handleSubmit(handleOtpVerification)} className="space-y-5">
-               <InputField
-                  name="otp"
-                  label="Enter OTP"
-                  errors={errors}
-                  register={register}
-                  placeholder="Enter the OTP sent to your phone"
-                  validation={{
-                     required: 'OTP cannot be empty.',
-                  }}
-               />
+               <div className="form-group">
+                  <label htmlFor="otp" className="block font-medium mb-1">
+                     Enter OTP
+                  </label>
+                  <input
+                     id="otp"
+                     name="otp"
+                     type="text"
+                     placeholder="Enter the OTP sent to your phone"
+                     {...register('otp', { required: 'OTP cannot be empty.' })}
+                     className={`block w-full rounded border px-3 py-2 ${errors.otp ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                  />
+                  {errors.otp && (
+                     <span className="text-red-500 text-sm">
+                        {errors.otp.message}
+                     </span>
+                  )}
+               </div>
 
                <button className="btn btn-primary w-full">
                   Verify OTP

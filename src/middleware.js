@@ -20,6 +20,7 @@ export async function middleware(req) {
 
   if (isProtectedRoute) {
     if (!accessToken) {
+      console.log(accessToken)
       // Redirect to login if not authenticated
       return NextResponse.redirect(new URL('/login', req.url));
     }

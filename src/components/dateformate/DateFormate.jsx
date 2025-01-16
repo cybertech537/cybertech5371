@@ -16,7 +16,7 @@ export default function DateFormate({ item }) {
                 minute: 'numeric',
             });
 
-            const formattedResult = formatter.format(timestamp);
+            const formattedResult = formatter?.format(timestamp);
             setFormattedTimestamp(formattedResult);
         };
 

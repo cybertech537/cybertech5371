@@ -19,7 +19,7 @@ export default function Dashboard() {
       try {
         const query = new URLSearchParams(params).toString();
         const response = await axios.get(`${serverUrl}api/user/v1/all`);
-        const fetchedDonors = response?.data?.details?.data || [];
+        const fetchedDonors = response?.data?.details?.paging || {};
         setTotalUser(fetchedDonors);
         setLoading(false)
       } catch (error) {
@@ -63,7 +63,7 @@ export default function Dashboard() {
          <div className="shadow-lg rounded bg-white p-4 flex justify-between items-center">
             <div className="">
                <span className='text-gray-400 font-semibold text-xl'>Donors</span>
-               <h3 className='text-2xl mt-2'>{totalUser?.length}</h3>
+               <h3 className='text-2xl mt-2'>{totalUser?.total}</h3>
             </div>
             <GiHeartDrop className='text-5xl text-primary' />
          </div>
