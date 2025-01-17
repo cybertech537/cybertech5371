@@ -38,7 +38,7 @@ export default function ClientSignup() {
       setErrorMsg('')
       setSuccessMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/registration', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/registration', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export default function ClientSignup() {
       setSuccessMsg('')
       setErrorMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/verify', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/verify', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ export default function ClientSignup() {
       setSuccessMsg('')
       setErrorMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/resend', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/resend', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'

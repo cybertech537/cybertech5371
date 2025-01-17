@@ -35,7 +35,7 @@ export default function ClientLogin() {
       setErrorMsg('')
       setSuccessMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/login', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/login', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export default function ClientLogin() {
    const handleOtpVerification = async (data) => {
       setLoading(true);
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/verify-login-otp', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/verify-login-otp', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export default function ClientLogin() {
          if (response.ok) {
 
             localStorage.setItem("agreeToken", result.token);
-            const userResponse = await axios.get(`http://localhost:5050/api/user/v1/me`, {
+            const userResponse = await axios.get(`https://donor-bridge-server.onrender.com/api/user/v1/me`, {
                headers: {
                   Authorization: `Bearer ${result.token}`,
                },
@@ -123,7 +123,7 @@ export default function ClientLogin() {
    const resendOtp = async () => {
       setLoading(true);
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/resend', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/resend', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',

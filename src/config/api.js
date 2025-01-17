@@ -1,1 +1,1 @@
-export const serverUrl = 'http://localhost:5050/'
+export const serverUrl = 'https://donor-bridge-server.onrender.com/'
