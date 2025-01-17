@@ -1,10 +1,36 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoArrowUpRight } from "react-icons/go";
 import BloodRequestCard from '../Card/BloodRequestCard';
+import axios from 'axios';
+import { serverUrl } from '@/config/api';
+import Loader from '../loader/Loader';
 
 export default function BloodRequest() {
+
+   const [donors, setDonors] = useState([]);
+   const [loading, setLoading] = useState(true);
+
+   const fetchDonors = async () => {
+      try {
+         const response = await axios.get(`${serverUrl}api/request/v1/`);
+         const fetchedDonors = response?.data?.data || [];
+         const filteredDonors = fetchedDonors.filter(donor => !donor.isReceived); // Filter where isReceived is false
+         setDonors(filteredDonors.slice(0, 4));
+         setLoading(false)
+      } catch (error) {
+         console.error('Error fetching donors:', error);
+      }
+   };
+
+   useEffect(() => {
+      fetchDonors();
+   }, []);
+
+   if (loading) return <Loader />;
+
    return (
       <div className='pb-20'>
          <div className="relative bg-black/70 pt-24 pb-40">
@@ -18,29 +44,21 @@ export default function BloodRequest() {
          </div>
          <div className="container">
             <div className="relative bg-white p-5 sm:p-10 shadow-lg -mt-16 max-w-4xl mx-auto">
-               <div className="grid sm:grid-cols-2 gap-x-10">
-                  <ul className='divide-y divide-gray-300 border-b sm:border-b-0 border-gray-300'>
-                     {list?.map((item, index) => (
-                        index % 2 === 0 ? (
-                           <li key={index}>
-                              <Link href={`/blood-requests/${item.uid}`}>
-                                 <BloodRequestCard />
-                              </Link>
-                           </li>
-                        ) : null
-                     ))}
-                  </ul>
-                  <ul className='divide-y divide-gray-300'>
-                     {list?.map((item, index) => (
-                        index % 2 !== 0 ? (
-                           <li key={index}>
-                              <Link href={`/blood-requests/${item.uid}`}>
-                                 <BloodRequestCard />
-                              </Link>
-                           </li>
-                        ) : null
-                     ))}
-                  </ul>
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5">
+                  {donors?.length > 0 ? (
+                     donors.map((item, index) => (
+                        <div
+                           key={item._id || index}
+                           className="border border-gray-300 p-4 rounded-md hover:shadow-md"
+                        >
+                           <Link href={`/blood-requests/${item?._id}`}>
+                              <BloodRequestCard item={item} />
+                           </Link>
+                        </div>
+                     ))
+                  ) : (
+                     <p className="text-center col-span-2 text-gray-500">No blood requests found.</p>
+                  )}
                </div>
                <div className="mt-10 text-center">
                   <Link className='btn btn-primary' href={'/blood-requests'}>

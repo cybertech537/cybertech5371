@@ -35,7 +35,7 @@ export default function ClientLogin() {
       setErrorMsg('')
       setSuccessMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/login', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/login', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export default function ClientLogin() {
    const handleOtpVerification = async (data) => {
       setLoading(true);
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/verify-login-otp', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/verify-login-otp', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -80,11 +80,14 @@ export default function ClientLogin() {
 
          console.log('response: ', response)
          console.log('result: ', result)
+         document.cookie = `accessToken=${result?.token}; path=/; secure;  SameSite=Strict; max-age=3600`;
+
+         document.cookie = `accessToken=${result?.token}; path=/; secure; SameSite=Strict; max-age=3600`;
 
          if (response.ok) {
 
             localStorage.setItem("agreeToken", result.token);
-            const userResponse = await axios.get(`http://localhost:5050/api/user/v1/me`, {
+            const userResponse = await axios.get(`https://donor-bridge-server.onrender.com/api/user/v1/me`, {
                headers: {
                   Authorization: `Bearer ${result.token}`,
                },
@@ -94,12 +97,15 @@ export default function ClientLogin() {
                // Store the user details in localStorage as a single object
                const userDetails = userResponse.data.details;
 
+               document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; max-age=3600`; // Example: Token valid for 1 hour
+
 
                localStorage.setItem("userData", JSON.stringify(userDetails));
 
             }
 
             toast.success('Successfully Logged in!');
+            window.location.href = '/admin/dashboard';
             // router.push('/admin/dashboard')
 
          } else {
@@ -117,7 +123,7 @@ export default function ClientLogin() {
    const resendOtp = async () => {
       setLoading(true);
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/resend', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/resend', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -179,22 +185,28 @@ export default function ClientLogin() {
                   {loading && <span className="loading loading-spinner loading-md"></span>}
                </button>
 
-               <div className="text-center">Or Login with</div>
-
-               <SocialLogin />
             </form>
          ) : (
             <form onSubmit={handleSubmit(handleOtpVerification)} className="space-y-5">
-               <InputField
-                  name="otp"
-                  label="Enter OTP"
-                  errors={errors}
-                  register={register}
-                  placeholder="Enter the OTP sent to your phone"
-                  validation={{
-                     required: 'OTP cannot be empty.',
-                  }}
-               />
+               <div className="form-group">
+                  <label htmlFor="otp" className="block font-medium mb-1">
+                     Enter OTP
+                  </label>
+                  <input
+                     id="otp"
+                     name="otp"
+                     type="text"
+                     placeholder="Enter the OTP sent to your phone"
+                     {...register('otp', { required: 'OTP cannot be empty.' })}
+                     className={`block w-full rounded border px-3 py-2 ${errors.otp ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                  />
+                  {errors.otp && (
+                     <span className="text-red-500 text-sm">
+                        {errors.otp.message}
+                     </span>
+                  )}
+               </div>
 
                <button className="btn btn-primary w-full">
                   Verify OTP

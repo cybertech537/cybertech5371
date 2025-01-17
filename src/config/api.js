@@ -1,0 +1,1 @@
+export const serverUrl = 'https://donor-bridge-server.onrender.com/'

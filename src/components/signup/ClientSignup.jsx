@@ -38,7 +38,7 @@ export default function ClientSignup() {
       setErrorMsg('')
       setSuccessMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/registration', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/registration', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export default function ClientSignup() {
       setSuccessMsg('')
       setErrorMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/verify', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/verify', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ export default function ClientSignup() {
       setSuccessMsg('')
       setErrorMsg('')
       try {
-         const response = await fetch('http://localhost:5050/api/user/v1/resend', {
+         const response = await fetch('https://donor-bridge-server.onrender.com/api/user/v1/resend', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -142,14 +142,25 @@ export default function ClientSignup() {
                   }
                   className="space-y-5"
                >
-                  <InputField
-                     name="otp"
-                     label="Enter OTP"
-                     errors={errors}
-                     register={register}
-                     placeholder="Enter the OTP sent to your phone"
-                     validation={{ required: 'OTP can not be empty.' }}
-                  />
+                  <div className="form-group">
+                     <label htmlFor="otp" className="block font-medium mb-1">
+                        Enter OTP
+                     </label>
+                     <input
+                        id="otp"
+                        name="otp"
+                        type="text"
+                        placeholder="Enter the OTP sent to your phone"
+                        {...register('otp', { required: 'OTP cannot be empty.' })}
+                        className={`block w-full rounded border px-3 py-2 ${errors.otp ? 'border-red-500' : 'border-gray-300'
+                           }`}
+                     />
+                     {errors.otp && (
+                        <span className="text-red-500 text-sm">
+                           {errors.otp.message}
+                        </span>
+                     )}
+                  </div>
 
                   <button className="btn btn-primary w-full" type='submit' disabled={loading}>
                      {loading ? 'Verifying' : 'Verify OTP'}
@@ -226,17 +237,15 @@ export default function ClientSignup() {
                      }}
                   />
 
-                  <label className="text-base mt-5 block">
+                  <label className="text-base mt-5 flex items-center gap-1">
+                     <input type="checkbox" name="" id="" />
                      <span>
                         I agree to <Link href={'/terms-and-conditions'} className='text-primary'>terms and conditions</Link>.
-                        </span>
+                     </span>
                   </label>
 
                   <button className="btn btn-primary w-full">Sign Up</button>
 
-                  <div className="text-center">Or Sign Up with</div>
-
-                  <SocialLogin />
                </form>
                <div className="text-center text-gray-400 mt-10">
                   Already have an account?{' '}

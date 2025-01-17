@@ -1,24 +1,89 @@
 "use client"
 
 import React from 'react'
-import Link from 'next/link';
-import SocialLogin from '@/components/shared/SocialLogin';
 import { useForm } from 'react-hook-form';
 import PageHero from '@/components/shared/PageHero';
 import InputField from '@/components/shared/InputField';
+import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
+import { useState } from 'react';
+import axios from 'axios';
+import { serverUrl } from '@/config/api';
+import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
-export default function AddRequest () {
+export default function AddRequest() {
+
+   const districts = getAllDistrict('en');
+   const upazilas = getAllUpazila("en");
+
+   const [selectedDistrict, setSelectedDistrict] = useState({ title: '', code: '' });
+   const [selectedUpazila, setSelectedUpazila] = useState('');
+   const [availableUpazilas, setAvailableUpazilas] = useState([]);
+
+   const handleDistrictChange = (e) => {
+      const districtValue = e.target.value;
+      // Find the selected district object from the list
+
+      const district = Object.values(districts)  // Get an array of arrays from the object
+         .flatMap((districtArray) => districtArray)  // Flatten the arrays into a single array
+         .find((d) => d.value === +districtValue);  // Find the district by value
+      setSelectedDistrict(district || { title: '', code: '' });
+
+
+      // Fetch upazilas for the selected district
+      const upazilasForDistrict = upazilas[districtValue] || [];
+      setAvailableUpazilas(upazilasForDistrict);
+   };
+
+   const handleUpazilaChange = (e) => {
+      setSelectedUpazila(e.target.value);
+   };
 
    const {
       register,
       handleSubmit,
       watch,
+      reset,
       formState: { errors },
    } = useForm()
-   const SubmitHandler = (data) => console.log(data)
+   const SubmitHandler = async (data) => {
+      const bearerToken = localStorage.getItem('agreeToken')
+      const config = {
+         headers: {
+            Authorization: `Bearer ${bearerToken}`,
+            'Content-Type': 'application/json'
+         }
+      };
+      const finalData = {
+         ...data,
+         district: selectedDistrict.title,
+         upazila: selectedUpazila
+      };
+      const response = await axios.post(`${serverUrl}api/request/v1/create`, finalData, config);
+      console.log(response.data);
+      if (response.data?.details) {
+         reset()
+         //toast.success(response?.data?.msg || 'New Request Created')
+         Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: response?.data?.msg || "New Request Created",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          window.location.href = '/blood-requests/'
+      } else {
+         toast.error('please Try Again')
+      }
+
+   }
 
    return (
       <div className="bg-gray-50 pb-14">
+         <Toaster
+            position="top-right"
+            reverseOrder={false}
+         />
          <PageHero title='Request for Blood'
             description='No donor available? Submit your blood request and connect with donors directly.' />
 
@@ -67,42 +132,49 @@ export default function AddRequest () {
                         }}
                      />
 
-                     <InputField
-                        name="district"
-                        label="District"
-                        type="select"
-                        register={register}
-                        validation={{ required: 'District is required.' }}
-                        errors={errors}
-                        options={[
-                           { value: 'A+', label: 'A+' },
-                           { value: 'A-', label: 'A-' },
-                           { value: 'B+', label: 'B+' },
-                           { value: 'B-', label: 'B-' },
-                           { value: 'AB+', label: 'AB+' },
-                           { value: 'AB-', label: 'AB-' },
-                           { value: 'O+', label: 'O+' },
-                           { value: 'O-', label: 'O-' },
-                        ]}
-                     />
-                     <InputField
-                        name="policestation"
-                        label="Thana / Upazila"
-                        type="select"
-                        register={register}
-                        validation={{ required: 'Thana / Upazila is required.' }}
-                        errors={errors}
-                        options={[
-                           { value: 'A+', label: 'A+' },
-                           { value: 'A-', label: 'A-' },
-                           { value: 'B+', label: 'B+' },
-                           { value: 'B-', label: 'B-' },
-                           { value: 'AB+', label: 'AB+' },
-                           { value: 'AB-', label: 'AB-' },
-                           { value: 'O+', label: 'O+' },
-                           { value: 'O-', label: 'O-' },
-                        ]}
-                     />
+                     {/* district dropdown */}
+                     <div>
+                        <label htmlFor="district" className="block mb-2 text-lg font-semibold">
+                           District
+                           <span className="text-red-600 inline-block ml-1">*</span>
+                        </label>
+                        <select
+                           id="district"
+                           onChange={handleDistrictChange}
+                           className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
+                        >
+                           <option value="">-- Select District --</option>
+                           {Object.values(districts).flatMap((districtArray) =>
+                              districtArray.map((district) => (
+                                 <option key={district.value} value={district.value}>
+                                    {district.title}
+                                 </option>
+                              ))
+                           )}
+                        </select>
+                     </div>
+
+                     {/* Upazila Dropdown */}
+                     <div>
+                        <label htmlFor="upazila" className="block mb-2 text-lg font-semibold">
+                           Upazila
+                           <span className="text-red-600 inline-block ml-1">*</span>
+                        </label>
+                        <select
+                           name="upazila"
+                           id="upazila"
+                           onChange={handleUpazilaChange}
+                           className="w-full px-4 py-2.5 rounded border border-gray-200 bg-white"
+                        >
+                           <option value="">-- Select Upazila --</option>
+                           {availableUpazilas &&
+                              availableUpazilas.map((upazila) => (
+                                 <option key={upazila.title} value={upazila.title}>
+                                    {upazila.title}
+                                 </option>
+                              ))}
+                        </select>
+                     </div>
 
                      <InputField
                         name={'area'}

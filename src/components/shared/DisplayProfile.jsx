@@ -1,7 +1,25 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DisplayProfile() {
+   const router = useRouter()
+
+   const handleLogout = () => {
+      // Clear localStorage
+      localStorage.clear();
+
+      // Clear cookies (basic example, update according to your cookie setup)
+      document.cookie.split(";").forEach((cookie) => {
+         const [name] = cookie.split("=");
+         document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+      });
+
+      // Redirect to login page
+      router.push("/login");
+   };
+
    return (
       <div className="dropdown dropdown-end">
          <div tabIndex="0" role="button" className="avatar">
@@ -19,7 +37,7 @@ export default function DisplayProfile() {
                <Link href={'/admin/profile/edit'}>Settings</Link>
             </li>
             <li>
-               <button>Logout</button>
+               <button onClick={handleLogout} >Logout</button>
             </li>
          </ul>
       </div>

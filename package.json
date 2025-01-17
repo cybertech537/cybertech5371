@@ -9,18 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.26.3",
+    "@headlessui/react": "^2.2.0",
     "@tailwindcss/typography": "^0.5.16",
     "axios": "^1.7.9",
     "bd-divisions-to-unions": "^1.0.3",
+    "date-fns": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
-    "next": "15.0.3",
+    "moment": "^2.30.1",
+    "next": "15.1.4",
     "next-auth": "^4.24.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.1",
-    "react-icons": "^5.4.0"
+    "react-icons": "^5.4.0",
+    "sweetalert2": "^11.15.10"
   },
   "devDependencies": {
     "daisyui": "^4.12.14",
