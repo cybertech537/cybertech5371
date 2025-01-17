@@ -1,6 +1,7 @@
 "use client";
 
 import BloodRequestCard from '@/components/Card/BloodRequestCard';
+import Loader from '@/components/loader/Loader';
 import { serverUrl } from '@/config/api';
 import axios from 'axios';
 import Image from 'next/image';
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function BloodRequest() {
   const [donors, setDonors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchDonors = async () => {
     try {
@@ -17,6 +19,7 @@ export default function BloodRequest() {
       const filteredDonors = fetchedDonors.filter(donor => !donor.isReceived); // Filter where isReceived is false
       console.log(filteredDonors);
       setDonors(filteredDonors);
+      setLoading(false)
     } catch (error) {
       console.error('Error fetching donors:', error);
     }
@@ -25,6 +28,8 @@ export default function BloodRequest() {
   useEffect(() => {
     fetchDonors();
   }, []);
+
+  if (loading) return <Loader />;
 
   return (
     <div className='pb-20'>

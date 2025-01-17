@@ -53,66 +53,76 @@ export default function Page() {
 
     return (
         <div>
-            <div className="mt-10 overflow-x-auto border-2 border-gray-200 bg-white p-10">
+            <div className="mt-10 border-2 border-gray-200 bg-white p-10">
                 <div className="mb-4">
                     <h2 className="text-2xl mb-2">
                         All Blood Request History: {requestedBlood?.length}
                     </h2>
                     <p>Below data shows how many times all requested blood.</p>
                 </div>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th className="border-b border-gray-300 px-4 py-2">Area</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Blood Group</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Disease</th>
-                            <th className="border-b border-gray-300 px-4 py-2">District</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Upazila</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Extra Contact</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Note</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Quantity</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Required Date</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Created At</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {requestedBlood.length > 0 ? (
-                            requestedBlood.map((request) => (
-                                <tr key={request._id} className="hover:bg-gray-100">
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.area}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.bloodGroup}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.disease}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.district}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.upazila}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.extraContact}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.note}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.quantity} bag</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">
-                                        {moment(request.requiredDate).format('MMMM Do YYYY')}
-                                    </td>
-                                    <td className="border-b border-gray-300 px-4 py-2">
-                                        {moment(request.createdAt).format('MMMM Do YYYY')}
-                                    </td>
-                                    <td className="border-b border-gray-300 px-4 py-2">
-                                        <button onClick={() => handleDelete(request._id)} className='bg-red-500 text-white py-1 px-[6px]'>
-                                            Delete
-                                        </button>
+                <div className='overflow-x-auto w-screen'>
+                    <table className='table w-full'>
+                        <thead>
+                            <tr>
+                                <th className="border-b border-gray-300 px-4 py-2">Area</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Blood Group</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Disease</th>
+                                <th className="border-b border-gray-300 px-4 py-2">District</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Upazila</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Extra Contact</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Note</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Quantity</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Required Date</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Created At</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Status</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {requestedBlood.length > 0 ? (
+                                requestedBlood.map((request) => (
+                                    <tr key={request._id} className="hover:bg-gray-100">
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.area}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.bloodGroup}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.disease}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.district}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.upazila}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.extraContact}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.note}</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">{request.quantity} bag</td>
+                                        <td className="border-b border-gray-300 px-4 py-2">
+                                            {moment(request.requiredDate).format('MMMM Do YYYY')}
+                                        </td>
+                                        <td className="border-b border-gray-300 px-4 py-2">
+                                            {moment(request.createdAt).format('MMMM Do YYYY')}
+                                        </td>
+                                        <td className="border-b border-gray-300 px-4 py-2">
+                                            {request.isReceived ? (
+                                                <span className="">Completed</span>
+                                            ) : (
+                                                <span className="">Pending</span>
+                                            )}
+                                        </td>
+                                        <td className="border-b border-gray-300 px-4 py-2">
+                                            <button onClick={() => handleDelete(request._id)} className='bg-red-500 text-white py-1 px-[6px]'>
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        className="border-b border-gray-300 px-4 py-2 text-center"
+                                        colSpan="10"
+                                    >
+                                        No requests found.
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td
-                                    className="border-b border-gray-300 px-4 py-2 text-center"
-                                    colSpan="10"
-                                >
-                                    No requests found.
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )
