@@ -1,9 +1,8 @@
 'use client';
 
 import SearchForm from '@/components/Donors/SearchForm';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
+import { FaArrowLeft, FaArrowRight, FaLocationDot, FaRegUser } from 'react-icons/fa6';
 import { TbUserHeart } from 'react-icons/tb';
 import axios from 'axios';
 import { serverUrl } from '@/config/api';
@@ -11,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/services/AuthProvider';
 import Swal from 'sweetalert2';
 import Loader from '@/components/loader/Loader';
+import { MdOutlineBloodtype } from 'react-icons/md';
+import { IoLocationOutline } from 'react-icons/io5';
 
 export default function Page() {
   const [donors, setDonors] = useState([]);
@@ -92,12 +93,22 @@ export default function Page() {
                   className="flex flex-wrap gap-4 bg-white shadow-md p-5 cursor-pointer"
                 >
                   <div className="flex-1">
-                    <ul className="text-lg">
-                      <li>
-                        <strong className="w-16 inline-block">Name</strong>:{' '}
-                        <span className="inline-block ml-2">{donor.name}</span>
+                    <ul className="text-lg space-y-3">
+                      <li className='flex items-center gap-1'>
+                        <FaRegUser className='text-primary text-2xl' />
+                        <span className="inline-block ml-2 flex-1">{donor.name}</span>
                       </li>
-                      <li>
+                      <li className='flex items-center gap-1'>
+                        <MdOutlineBloodtype className='text-primary text-2xl' />
+                        <span className="inline-block ml-2 flex-1">{donor.bloodGroup}</span>
+                      </li>
+                      <li className='flex items-center gap-1'>
+                        <IoLocationOutline className='text-primary text-2xl' />
+                        <span className="inline-block ml-2 flex-1">
+                          {donor.address?.district}, {donor.address?.upazila}
+                        </span>
+                      </li>
+                      {/* <li>
                         <strong className="w-16 inline-block">Group</strong>:{' '}
                         <span className="inline-block ml-2">{donor.bloodGroup}</span>
                       </li>
@@ -106,7 +117,7 @@ export default function Page() {
                         <span className="inline-block ml-2">
                           {donor.address?.district}, {donor.address?.upazila}
                         </span>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                   <TbUserHeart className="text-7xl text-primary" />

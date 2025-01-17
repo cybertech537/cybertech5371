@@ -1,8 +1,6 @@
 "use client"
 
 import React from 'react'
-import Link from 'next/link';
-import SocialLogin from '@/components/shared/SocialLogin';
 import { useForm } from 'react-hook-form';
 import PageHero from '@/components/shared/PageHero';
 import InputField from '@/components/shared/InputField';
@@ -10,7 +8,8 @@ import { getAllDistrict, getAllUpazila } from 'bd-divisions-to-unions';
 import { useState } from 'react';
 import axios from 'axios';
 import { serverUrl } from '@/config/api';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 export default function AddRequest() {
 
@@ -47,26 +46,33 @@ export default function AddRequest() {
       reset,
       formState: { errors },
    } = useForm()
-   const SubmitHandler = async(data) => {
+   const SubmitHandler = async (data) => {
       const bearerToken = localStorage.getItem('agreeToken')
       const config = {
          headers: {
-           Authorization: `Bearer ${bearerToken}`,
-           'Content-Type': 'application/json'
+            Authorization: `Bearer ${bearerToken}`,
+            'Content-Type': 'application/json'
          }
-       };
+      };
       const finalData = {
          ...data,
          district: selectedDistrict.title,
          upazila: selectedUpazila
       };
-      const response = await axios.post(`${serverUrl}api/request/v1/create`,finalData,config);
+      const response = await axios.post(`${serverUrl}api/request/v1/create`, finalData, config);
       console.log(response.data);
-      if(response.data?.details){
-reset()
-alert('New Request Created Successfully')
-         toast.success(response?.data?.msg || 'New Request Created')
-      }else{
+      if (response.data?.details) {
+         reset()
+         //toast.success(response?.data?.msg || 'New Request Created')
+         Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: response?.data?.msg || "New Request Created",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          window.location.href = '/blood-requests/'
+      } else {
          toast.error('please Try Again')
       }
 
@@ -74,6 +80,10 @@ alert('New Request Created Successfully')
 
    return (
       <div className="bg-gray-50 pb-14">
+         <Toaster
+            position="top-right"
+            reverseOrder={false}
+         />
          <PageHero title='Request for Blood'
             description='No donor available? Submit your blood request and connect with donors directly.' />
 

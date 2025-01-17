@@ -4,6 +4,7 @@ import { useAuth } from '@/services/AuthProvider'
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export default function Page() {
 
@@ -25,24 +26,91 @@ export default function Page() {
         }
     };
 
+
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`${serverUrl}api/request/v1/${id}`);
-            if (response?.data?.success) {
-                // Filter out the deleted request from the list
-                setRequestedBlood((prevBloodRequests) =>
-                    prevBloodRequests.filter((request) => request._id !== id)
-                );
-                alert('Request deleted successfully!');
-                fetchDonors();
-            } else {
-                alert('Failed to delete the request');
+            // Show confirmation alert
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+
+            // Proceed if the user confirms
+            if (result.isConfirmed) {
+                const response = await axios.delete(`${serverUrl}api/request/v1/${id}`);
+
+                if (response?.data?.success) {
+                    // Filter out the deleted request from the list
+                    setRequestedBlood((prevBloodRequests) =>
+                        prevBloodRequests.filter((request) => request._id !== id)
+                    );
+
+                    // Show success alert
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your request has been successfully deleted.",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false,
+                        toast: true,
+                        position: "top-end"
+                    });
+
+                    // Fetch updated list of donors
+                    fetchDonors();
+                } else {
+                    // Show failure alert
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Failed to delete the request.",
+                        icon: "error",
+                        timer: 1500,
+                        showConfirmButton: false,
+                        toast: true,
+                        position: "top-end"
+                    });
+                }
             }
         } catch (error) {
-            console.error('Error deleting request:', error);
-            alert('Failed to delete the request');
+            console.error("Error deleting request:", error);
+
+            // Show error alert
+            Swal.fire({
+                title: "Error!",
+                text: "An unexpected error occurred. Please try again.",
+                icon: "error",
+                timer: 1500,
+                showConfirmButton: false,
+                toast: true,
+                position: "top-end"
+            });
         }
     };
+
+
+    // const handleDelete = async (id) => {
+    //     try {
+    //         const response = await axios.delete(`${serverUrl}api/request/v1/${id}`);
+    //         if (response?.data?.success) {
+    //             setRequestedBlood((prevBloodRequests) =>
+    //                 prevBloodRequests.filter((request) => request._id !== id)
+    //             );
+    //             alert('Request deleted successfully!');
+
+    //             fetchDonors();
+    //         } else {
+    //             alert('Failed to delete the request');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error deleting request:', error);
+    //         alert('Failed to delete the request');
+    //     }
+    // };
 
     useEffect(() => {
         fetchDonors();
