@@ -185,9 +185,6 @@ export default function ClientLogin() {
                   {loading && <span className="loading loading-spinner loading-md"></span>}
                </button>
 
-               <div className="text-center">Or Login with</div>
-
-               <SocialLogin />
             </form>
          ) : (
             <form onSubmit={handleSubmit(handleOtpVerification)} className="space-y-5">

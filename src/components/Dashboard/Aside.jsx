@@ -31,7 +31,7 @@ export default function Aside() {
                   </li>
                )}
                {
-                  user?.role === "Admin" &&
+                  user?.role === "User" &&
                   <li>
                      <Link href='/admin/allBloodRequest' className={`flex items-center gap-2 py-3 px-4 ${'/admin/allBloodRequest' === pathname && 'text-primary bg-primary/10'}`}>
                         <FaHeartCirclePlus className='text-2xl text-primary' />

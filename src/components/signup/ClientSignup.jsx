@@ -246,9 +246,6 @@ export default function ClientSignup() {
 
                   <button className="btn btn-primary w-full">Sign Up</button>
 
-                  <div className="text-center">Or Sign Up with</div>
-
-                  <SocialLogin />
                </form>
                <div className="text-center text-gray-400 mt-10">
                   Already have an account?{' '}

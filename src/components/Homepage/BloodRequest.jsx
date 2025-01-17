@@ -6,10 +6,12 @@ import { GoArrowUpRight } from "react-icons/go";
 import BloodRequestCard from '../Card/BloodRequestCard';
 import axios from 'axios';
 import { serverUrl } from '@/config/api';
+import Loader from '../loader/Loader';
 
 export default function BloodRequest() {
 
    const [donors, setDonors] = useState([]);
+   const [loading, setLoading] = useState(true);
 
    const fetchDonors = async () => {
       try {
@@ -17,6 +19,7 @@ export default function BloodRequest() {
          const fetchedDonors = response?.data?.data || [];
          const filteredDonors = fetchedDonors.filter(donor => !donor.isReceived); // Filter where isReceived is false
          setDonors(filteredDonors.slice(0, 4));
+         setLoading(false)
       } catch (error) {
          console.error('Error fetching donors:', error);
       }
@@ -25,6 +28,8 @@ export default function BloodRequest() {
    useEffect(() => {
       fetchDonors();
    }, []);
+
+   if (loading) return <Loader />;
 
    return (
       <div className='pb-20'>
