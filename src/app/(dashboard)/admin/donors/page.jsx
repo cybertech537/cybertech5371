@@ -51,7 +51,7 @@ export default function Page() {
   const fetchDonors = async (params = {}, page = 1) => {
     try {
       const query = new URLSearchParams({ ...params, page }).toString();
-      const response = await axios.get(`${serverUrl}api/user/v1/valid-donors?${query}`);
+      const response = await axios.get(`${serverUrl}api/user/v1/all?${query}`);
       const fetchedDonors = response?.data?.details?.data || [];
       setDonors(fetchedDonors);
       setLoading(false)
