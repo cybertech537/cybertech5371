@@ -127,25 +127,28 @@ export default function Page() {
               <p className="text-center col-span-full text-gray-500">No donors found.</p>
             )}
           </div>
-          <div className="flex justify-center items-center gap-6 mt-12">
-            <button
-              className="btn btn-primary"
-              onClick={() => handlePageChange(page - 1)}
-              disabled={page <= 1}
-            >
-              <FaArrowLeft /> Previous
-            </button>
-            <p className="text-lg">
-              Page {page} of {pages}
-            </p>
-            <button
-              className="btn btn-primary"
-              onClick={() => handlePageChange(page + 1)}
-              disabled={page >= pages}
-            >
-              Next <FaArrowRight />
-            </button>
-          </div>
+
+          {donors.length > 12 &&
+            <div className="flex justify-center items-center gap-6 mt-12">
+              <button
+                className="btn btn-primary"
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page <= 1}
+              >
+                <FaArrowLeft /> Previous
+              </button>
+              <p className="text-lg">
+                Page {page} of {pages}
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => handlePageChange(page + 1)}
+                disabled={page >= pages}
+              >
+                Next <FaArrowRight />
+              </button>
+            </div>
+          }
         </div>
       </div>
     </>

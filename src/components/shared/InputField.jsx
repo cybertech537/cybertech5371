@@ -1,12 +1,10 @@
 export default function InputField({ name, label, placeholder, register, validation = {}, errors, type = 'text', options = [], classname='' }) {
-
    return (
       <div className={classname}>
          <label htmlFor={name} className='block mb-2 text-lg font-semibold'>
             {label}
             {validation.required && <span className="text-red-600 inline-block ml-1">*</span>}
          </label>
-
          {/* input or select-option */}
          {type === 'select' ? (
             <select

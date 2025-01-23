@@ -3,7 +3,9 @@ import { serverUrl } from '@/config/api'
 import { useAuth } from '@/services/AuthProvider'
 import axios from 'axios'
 import moment from 'moment'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { RiExternalLinkLine } from 'react-icons/ri'
 import Swal from 'sweetalert2'
 
 export default function Page() {
@@ -12,7 +14,7 @@ export default function Page() {
     const { user } = useAuth()
 
     const fetchDonors = async () => {
-        if (!user?._id) {
+        if (! user && !user?._id) {
             console.error("User ID is undefined, cannot fetch requests.");
             return;
         }
@@ -128,17 +130,18 @@ export default function Page() {
                     </h2>
                     <p>Below data shows how many times all requested blood.</p>
                 </div>
-                <div className='overflow-x-auto w-screen'>
+                <div className='overflow-x-auto max-w-[1400px] w-full overflow-y-hidden'>
                     <table className='table w-full'>
                         <thead>
                             <tr>
+                                <th className='border-b border-gray-300 px-0'></th>
                                 <th className="border-b border-gray-300 px-4 py-2">Area</th>
                                 <th className="border-b border-gray-300 px-4 py-2">Blood Group</th>
                                 <th className="border-b border-gray-300 px-4 py-2">Disease</th>
                                 <th className="border-b border-gray-300 px-4 py-2">District</th>
                                 <th className="border-b border-gray-300 px-4 py-2">Upazila</th>
                                 <th className="border-b border-gray-300 px-4 py-2">Extra Contact</th>
-                                <th className="border-b border-gray-300 px-4 py-2">Note</th>
+                                {/* <th className="border-b border-gray-300 px-4 py-2">Note</th> */}
                                 <th className="border-b border-gray-300 px-4 py-2">Quantity</th>
                                 <th className="border-b border-gray-300 px-4 py-2">Required Date</th>
                                 <th className="border-b border-gray-300 px-4 py-2">Created At</th>
@@ -150,28 +153,33 @@ export default function Page() {
                             {requestedBlood.length > 0 ? (
                                 requestedBlood.map((request) => (
                                     <tr key={request._id} className="hover:bg-gray-100">
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.area}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.bloodGroup}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.disease}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.district}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.upazila}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.extraContact}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.note}</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">{request.quantity} bag</td>
-                                        <td className="border-b border-gray-300 px-4 py-2">
+                                        <td className='border-b whitespace-nowrap border-gray-300 px-0'>
+                                            <Link href={`/blood-requests/${request._id}`} className='text-primary text-xl' target='_blank'>
+                                                <RiExternalLinkLine />
+                                            </Link>
+                                        </td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.area}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.bloodGroup}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.disease}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.district}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.upazila}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.extraContact}</td>
+                                        {/* <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.note}</td> */}
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.quantity} bag</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">
                                             {moment(request.requiredDate).format('MMMM Do YYYY')}
                                         </td>
-                                        <td className="border-b border-gray-300 px-4 py-2">
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">
                                             {moment(request.createdAt).format('MMMM Do YYYY')}
                                         </td>
-                                        <td className="border-b border-gray-300 px-4 py-2">
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">
                                             {request.isReceived ? (
                                                 <span className="">Completed</span>
                                             ) : (
                                                 <span className="">Pending</span>
                                             )}
                                         </td>
-                                        <td className="border-b border-gray-300 px-4 py-2">
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">
                                             <button onClick={() => handleDelete(request._id)} className='bg-red-500 text-white py-1 px-[6px]'>
                                                 Delete
                                             </button>

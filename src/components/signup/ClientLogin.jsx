@@ -4,24 +4,25 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import InputField from '@/components/shared/InputField';
-import SocialLogin from '@/components/shared/SocialLogin';
 import toast, { Toaster } from 'react-hot-toast';
-// import { useAuth } from '@/services/AuthProvider';
 import axios from 'axios';
+import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 // import { Router } from 'next/router';
 
 export default function ClientLogin() {
-
-   // const router = Router()
-
-   // const { setUser } = useAuth();
-
 
    const [step, setStep] = useState('login');
    const [errorMsg, setErrorMsg] = useState('')
    const [successMsg, setSuccessMsg] = useState('')
    const [loading, setLoading] = useState(false)
    const [phone, setPhone] = useState('')
+
+   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+   const handlePasswordVisibility = (e) => {
+      e.preventDefault()
+      setIsPasswordVisible((prev) => !prev);
+   };
 
    const {
       register,
@@ -80,9 +81,9 @@ export default function ClientLogin() {
 
          console.log('response: ', response)
          console.log('result: ', result)
-         document.cookie = `accessToken=${result?.token}; path=/; secure;  SameSite=Strict; max-age=3600`;
+         document.cookie = `accessToken=${result?.token}; path=/; secure;  SameSite=Strict; max-age=604800`;
 
-         document.cookie = `accessToken=${result?.token}; path=/; secure; SameSite=Strict; max-age=3600`;
+         document.cookie = `accessToken=${result?.token}; path=/; secure; SameSite=Strict; max-age=604800`;
 
          if (response.ok) {
 
@@ -97,7 +98,7 @@ export default function ClientLogin() {
                // Store the user details in localStorage as a single object
                const userDetails = userResponse.data.details;
 
-               document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; max-age=3600`; // Example: Token valid for 1 hour
+               document.cookie = `agreeToken=${result.token}; path=/; secure; SameSite=Strict; max-age=604800`; // Example: Token valid for 1 hour
 
 
                localStorage.setItem("userData", JSON.stringify(userDetails));
@@ -168,17 +169,23 @@ export default function ClientLogin() {
                   }}
                />
 
-               <InputField
-                  name="password"
-                  label="Password"
-                  type="password"
-                  placeholder={'Enter Passowrd'}
-                  errors={errors}
-                  register={register}
-                  validation={{
-                     required: 'Password cannot be empty.',
-                  }}
-               />
+               <div className="relative">
+                  <button onClick={handlePasswordVisibility} className="absolute cursor-pointer right-2 top-12 text-2xl">
+                     {isPasswordVisible ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                  </button>
+
+                  <InputField
+                     name="password"
+                     label="Password"
+                     type={isPasswordVisible ? 'text' : 'password'}
+                     placeholder={'Enter Passowrd'}
+                     errors={errors}
+                     register={register}
+                     validation={{
+                        required: 'Password cannot be empty.',
+                     }}
+                  />
+               </div>
 
                <button className="btn btn-primary w-full">
                   Login

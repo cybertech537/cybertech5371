@@ -1,5 +1,5 @@
 'use client'
-import Image from "next/image";
+import { HiOutlineUserCircle } from "react-icons/hi2";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -23,8 +23,9 @@ export default function DisplayProfile() {
    return (
       <div className="dropdown dropdown-end">
          <div tabIndex="0" role="button" className="avatar">
-            <div className="w-10 rounded-full">
-               <Image src={'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'} height={40} width={40} alt='profile' />
+            <div className="">
+               {/* <Image src={'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'} height={40} width={40} alt='profile' /> */}
+               <HiOutlineUserCircle className="text-5xl text-primary" />
             </div>
          </div>
          <ul

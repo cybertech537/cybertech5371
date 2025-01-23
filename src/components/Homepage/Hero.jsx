@@ -1,8 +1,12 @@
+'use client'
+
+import { useAuth } from '@/services/AuthProvider'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 export default function Hero() {
+   const { user } = useAuth()
    return (
       <div className="relative pt-20 md:pt-32 pb-32 md:pb-56">
          <Image src={`/img/hero.jpg`} height={500} width={1920} alt='hero' className='absolute h-full w-full object-cover object-left top-0 left-0' />
@@ -16,9 +20,10 @@ export default function Hero() {
                   Be the reason someone smiles today.
                </p>
                {/* Become a donor, when loggedin browse request */}
-               <Link href={'/signup/'} className="mt-10 btn btn-primary text-lg px-10 py-3">
+               {!user && <Link href={'/signup/'} className="mt-10 btn btn-primary text-lg px-10 py-3">
                   Become a donor
-               </Link>
+               </Link>}
+
             </div>
          </div>
       </div>

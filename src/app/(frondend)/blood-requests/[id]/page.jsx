@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { formatDistanceToNow } from 'date-fns';
 import moment from 'moment';
+import { HiOutlineUserCircle } from 'react-icons/hi2';
 
 export default function RecipientDetail() {
 
@@ -46,7 +47,8 @@ export default function RecipientDetail() {
           <h1 className='text-center mb-6 text-4xl'>Urgent Blood Needed</h1>
           <div className="border-2 border-gray-200 bg-white p-5 sm:p-10">
             <div className="flex flex-wrap gap-3 items-center">
-              <Image src={'https://i.ibb.co.com/Sy3Y3sX/Jahid.jpg'} alt='profile' height={60} width={60} className='border-4 border-primary shadow-lg rounded-full object-cover' />
+              {/* <Image src={'https://i.ibb.co.com/Sy3Y3sX/Jahid.jpg'} alt='profile' height={60} width={60} className='border-4 border-primary shadow-lg rounded-full object-cover' /> */}
+              <HiOutlineUserCircle className="text-6xl text-primary" />
               <div className="flex-1">
                 <p>
                   Requested by <span className='text-primary'>{request?.userId?.name}</span>
@@ -66,20 +68,22 @@ export default function RecipientDetail() {
                   <Link href={`tel:${request?.userId?.phone}`}>{request?.userId?.phone}</Link>
                 </div>
               </div>
-              <div className="py-3 border-t-2">
-                <div className="uppercase text-gray-600 mb-2 text-base">
-                  Extra Contact
+              {request?.extraContact &&
+                <div className="py-3 border-t-2">
+                  <div className="uppercase text-gray-600 mb-2 text-base">
+                    Extra Contact
+                  </div>
+                  <div className="font-bold">
+                    <Link href={`tel:${request?.extraContact}`}>{request?.extraContact}</Link>
+                  </div>
                 </div>
-                <div className="font-bold">
-                  <Link href={`tel:${request?.extraContact}`}>{request?.extraContact}</Link>
-                </div>
-              </div>
+              }
               <div className="py-3 border-t-2">
                 <div className="uppercase text-gray-600 mb-2 text-base">
                   Area
                 </div>
                 <div className="font-bold">
-                {request?.upazila}, {request?.district}
+                  {request?.upazila}, {request?.district}
                 </div>
               </div>
               <div className="py-3 border-t-2">

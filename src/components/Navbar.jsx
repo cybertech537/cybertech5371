@@ -1,6 +1,5 @@
 "use client"
 import Link from 'next/link';
-import React from 'react'
 import { RiMenu2Line } from "react-icons/ri";
 import { LiaTimesSolid } from "react-icons/lia";
 import Logo from './shared/Logo';
@@ -9,9 +8,7 @@ import { useAuth } from '@/services/AuthProvider';
 
 export default function Navbar() {
 
-   const { user } = useAuth()
-
-   console.log(user)
+   const { user, loading } = useAuth()
 
    return (
       <>
@@ -30,19 +27,25 @@ export default function Navbar() {
                      </ul>
                   </div>
                   <div className="navbar-end items-center gap-3">
-                     {
-                        user && user?.name ?
-                           <DisplayProfile />
-                           :
+                     {loading ? <span className="text-4xl loading loading-spinner loading-md"></span>
+                        :
+                        <>
+                           {
+                              user && user?.name ?
+                                 <DisplayProfile />
+                                 :
 
-                           <div className="flex gap-3 items-center flex-wrap">
-                              <Link href={'/signup'} className="btn bg-black text-white hover:bg-primary hidden sm:inline-flex py-1.5">Register</Link>
-                              <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
-                           </div>
+                                 <div className="flex gap-3 items-center flex-wrap">
+                                    <Link href={'/signup'} className="btn bg-black text-white hover:bg-primary hidden sm:inline-flex py-1.5">Register</Link>
+                                    <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
+                                 </div>
+                           }
+                           <label htmlFor='mobile-menu-drawer' className="inline-block cursor-pointer lg:hidden">
+                              <RiMenu2Line className='text-3xl' />
+                           </label>
+                        </>
                      }
-                     <label htmlFor='mobile-menu-drawer' className="inline-block cursor-pointer lg:hidden">
-                        <RiMenu2Line className='text-3xl' />
-                     </label>
+
                   </div>
                </div>
             </div>

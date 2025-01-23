@@ -10,7 +10,7 @@ import { LuMapPin } from 'react-icons/lu'
 import { useAuth } from '@/services/AuthProvider'
 import DonateModal from '@/components/Donors/DonatModal'
 import axios from 'axios'
-import DateFormate from '@/components/dateformate/DateFormate'
+import { HiOutlineUserCircle } from "react-icons/hi2";
 import moment from 'moment'
 import Loader from '@/components/loader/Loader'
 
@@ -29,7 +29,8 @@ export default function DonorDetail() {
          <div className="">
             <div className="flex flex-wrap gap-8 border-2 border-gray-200 bg-white p-10">
                <div className="">
-                  <Image src={user?.image} alt='profile' height={200} width={200} className='border-4 border-white shadow-lg rounded-full object-cover' />
+                  {/* <Image src={user?.image} alt='profile' height={200} width={200} className='border-4 border-white shadow-lg rounded-full object-cover' /> */}
+                  <HiOutlineUserCircle className='text-primary h-48 w-48' />
                </div>
                <div className="md:flex-1">
                   <div className="flex justify-between items-start">
@@ -65,26 +66,34 @@ export default function DonorDetail() {
                            <Link href={`tel:${user?.phone}`}>{user?.phone}</Link>
                         </div>
                      </div>
-                     <div className="">
-                        <div className="uppercase text-gray-600 mb-2 text-base">
-                           Blood Group
+                     {user?.bloodGroup &&
+                        <div className="">
+                           <div className="uppercase text-gray-600 mb-2 text-base">
+                              Blood Group
+                           </div>
+                           <div className="font-bold">{user?.bloodGroup}</div>
                         </div>
-                        <div className="font-bold">{user?.bloodGroup}</div>
-                     </div>
-                     <div className="">
-                        <div className="uppercase text-gray-600 mb-2 text-base">
-                           Address
+                     }
+
+                     {user?.address?.upazila &&
+                        <div className="">
+                           <div className="uppercase text-gray-600 mb-2 text-base">
+                              Address
+                           </div>
+                           <div className="font-bold">
+                              {user?.address?.upazila}, {user?.address?.district}
+                           </div>
                         </div>
-                        <div className="font-bold">
-                           {user?.address?.upazila}, {user?.address?.district}
+                     }
+                     {user?.occupation &&
+                        <div className="">
+                           <div className="uppercase text-gray-600 mb-2 text-base">
+                              Occupation
+                           </div>
+                           <div className="font-bold">{user?.occupation}</div>
                         </div>
-                     </div>
-                     <div className="">
-                        <div className="uppercase text-gray-600 mb-2 text-base">
-                           Occupation
-                        </div>
-                        <div className="font-bold">{user?.occupation}</div>
-                     </div>
+                     }
+
                      <div className="">
                         <div className="uppercase text-gray-600 mb-2 text-base">
                            Total Donation

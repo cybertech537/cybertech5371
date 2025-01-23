@@ -7,6 +7,7 @@ import SocialLogin from '@/components/shared/SocialLogin';
 import InputField from '@/components/shared/InputField';
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 export default function ClientSignup() {
 
@@ -18,6 +19,8 @@ export default function ClientSignup() {
    const [errorMsg, setErrorMsg] = useState('')
    const [successMsg, setSuccessMsg] = useState('')
    const [loading, setLoading] = useState(false)
+
+   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
    const {
       register,
@@ -33,7 +36,20 @@ export default function ClientSignup() {
       }
    }, [otpSent, timeLeft]);
 
+   const handlePasswordVisibility = (e) => {
+      e.preventDefault()
+      setIsPasswordVisible((prev) => !prev);
+   };
+
    const SubmitHandler = async (data) => {
+      const { email, name, phone, password, terms_check } = data
+      const formData = {
+         email: (typeof email === 'string' && email.trim() === "") ? undefined : email,
+         name: name,
+         phone: phone,
+         password: password
+      }
+      console.log(formData)
       setLoading(true)
       setErrorMsg('')
       setSuccessMsg('')
@@ -43,18 +59,22 @@ export default function ClientSignup() {
             headers: {
                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(formData)
          })
 
          const result = await response.json()
 
          if (response.ok) {
             setOtpSent(true)
-            setPhone(data.phone)
+            setPhone(formData.phone)
             setSuccessMsg('OPT sent to your phone number. Please verify.')
+            console.log("result:", result)
+            console.log("resopnse:", response)
          } else {
             toast.error(result.msg)
             setErrorMsg(result.msg || 'Registration failed. Please try again.');
+            console.log("result:", result)
+            console.log("resopnse:", response)
          }
 
       } catch (error) {
@@ -221,28 +241,44 @@ export default function ClientSignup() {
                         },
                      }}
                   />
-
-                  <InputField
-                     name="password"
-                     label="Password"
-                     type="password"
-                     errors={errors}
-                     register={register}
-                     validation={{
-                        required: 'Password can not be empty.',
-                        pattern: {
-                           value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                           message: 'Password must be at least 8 characters long, include one letter, one number, and one special character.',
-                        },
-                     }}
-                  />
+                  <div className="relative">
+                     <button onClick={handlePasswordVisibility} className="absolute cursor-pointer right-2 top-12 text-2xl">
+                        {isPasswordVisible ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                     </button>
+                     <InputField
+                        name="password"
+                        label="Password"
+                        type={isPasswordVisible ? 'text' : 'password'}
+                        errors={errors}
+                        register={register}
+                        validation={{
+                           required: 'Password can not be empty.',
+                           pattern: {
+                              value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+                              message: 'Password must be at least 8 characters long, include one letter, one number, and one special character.',
+                           },
+                        }}
+                     />
+                  </div>
 
                   <label className="text-base mt-5 flex items-center gap-1">
-                     <input type="checkbox" name="" id="" />
+                     <input
+                        type="checkbox"
+                        {...register('terms_check', {
+                           required: 'You must agree to the terms and conditions.',
+                        })}
+                     />
                      <span>
-                        I agree to <Link href={'/terms-and-conditions'} className='text-primary'>terms and conditions</Link>.
+                        I agree to{' '}
+                        <Link href="/terms-and-conditions" className="text-primary">
+                           terms and conditions
+                        </Link>
+                        .
                      </span>
                   </label>
+                  {errors.terms_check && (
+                     <p className="text-red-500 text-sm mt-1">{errors.terms_check.message}</p>
+                  )}
 
                   <button className="btn btn-primary w-full">Sign Up</button>
 

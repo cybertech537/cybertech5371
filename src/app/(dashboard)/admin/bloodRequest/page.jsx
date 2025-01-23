@@ -3,11 +3,13 @@ import { serverUrl } from '@/config/api'
 import { useAuth } from '@/services/AuthProvider'
 import axios from 'axios'
 import moment from 'moment'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { FaDisease } from 'react-icons/fa6'
 import { FiUser } from 'react-icons/fi'
 import { IoCalendarClearSharp } from 'react-icons/io5'
 import { LuMapPin } from 'react-icons/lu'
+import { RiExternalLinkLine } from 'react-icons/ri'
 
 export default function Page() {
     const [requestedBlood, setRequestedBlood] = useState([]);
@@ -55,66 +57,74 @@ export default function Page() {
                     </h2>
                     <p>Below data shows how many times your requested blood.</p>
                 </div>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th className="border-b border-gray-300 px-4 py-2">Area</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Blood Group</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Disease</th>
-                            <th className="border-b border-gray-300 px-4 py-2">District</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Upazila</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Extra Contact</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Note</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Quantity</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Required Date</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Created At</th>
-                            <th className="border-b border-gray-300 px-4 py-2">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {requestedBlood.length > 0 ? (
-                            requestedBlood.map((request) => (
-                                <tr key={request._id} className="hover:bg-gray-100">
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.area}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.bloodGroup}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.disease}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.district}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.upazila}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.extraContact}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.note}</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">{request.quantity} bag</td>
-                                    <td className="border-b border-gray-300 px-4 py-2">
-                                        {moment(request.requiredDate).format('MMMM Do YYYY')}
-                                    </td>
-                                    <td className="border-b border-gray-300 px-4 py-2">
-                                        {moment(request.createdAt).format('MMMM Do YYYY')}
-                                    </td>
-                                    <td className="border-b border-gray-300 px-4 py-2">
-                                        {request.isReceived ? (
-                                            <span className="text-gray-500">Received</span>
-                                        ) : (
-                                            <button
-                                                onClick={() => handleToggleReceived(request._id, request.isReceived)}
-                                                className="bg-primary py-1 px-3 text-white font-semibold"
-                                            >
-                                                Mark as Received
-                                            </button>
-                                        )}
+                <div className="overflow-x-auto overflow-y-hidden">
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th className='border-b border-gray-300 px-0'></th>
+                                <th className="border-b border-gray-300 px-4 py-2">Area</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Blood Group</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Disease</th>
+                                <th className="border-b border-gray-300 px-4 py-2">District</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Upazila</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Extra Contact</th>
+                                {/* <th className="border-b border-gray-300 px-4 py-2">Note</th> */}
+                                <th className="border-b border-gray-300 px-4 py-2">Quantity</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Required Date</th>
+                                <th className="border-b border-gray-300 px-4 py-2">Created At</th>
+                                <th className="border-b border-gray-300 pl-4 pr-0 py-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {requestedBlood.length > 0 ? (
+                                requestedBlood.map((request) => (
+                                    <tr key={request._id} className="hover:bg-gray-100">
+                                        <td className='border-b whitespace-nowrap border-gray-300 px-0'>
+                                            <Link href={`/blood-requests/${request._id}`} className='text-primary text-xl' target='_blank'>
+                                                <RiExternalLinkLine />
+                                            </Link>
+                                        </td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.area}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.bloodGroup}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.disease}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.district}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.upazila}</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.extraContact}</td>
+                                        {/* <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.note}</td> */}
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">{request.quantity} bag</td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">
+                                            {moment(request.requiredDate).format('MMMM Do YYYY')}
+                                        </td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 px-4 py-2">
+                                            {moment(request.createdAt).format('MMMM Do YYYY')}
+                                        </td>
+                                        <td className="border-b whitespace-nowrap border-gray-300 pl-4 pr-0 py-2">
+                                            {request.isReceived ? (
+                                                <span className="text-gray-500">Received</span>
+                                            ) : (
+                                                <button
+                                                    onClick={() => handleToggleReceived(request._id, request.isReceived)}
+                                                    className="bg-primary py-1 px-3 text-white font-semibold"
+                                                >
+                                                    Mark as Received
+                                                </button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        className="border-b border-gray-300 px-4 py-2 text-center"
+                                        colSpan="10"
+                                    >
+                                        No requests found.
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td
-                                    className="border-b border-gray-300 px-4 py-2 text-center"
-                                    colSpan="10"
-                                >
-                                    No requests found.
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )
