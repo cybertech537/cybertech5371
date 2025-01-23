@@ -27,24 +27,19 @@ export default function Navbar() {
                      </ul>
                   </div>
                   <div className="navbar-end items-center gap-3">
-                     {loading ? <span className="text-4xl loading loading-spinner loading-md"></span>
-                        :
-                        <>
-                           {
-                              user && user?.name ?
-                                 <DisplayProfile />
-                                 :
+                     {
+                        user && user?.name ?
+                           <DisplayProfile />
+                           :
 
-                                 <div className="flex gap-3 items-center flex-wrap">
-                                    <Link href={'/signup'} className="btn bg-black text-white hover:bg-primary hidden sm:inline-flex py-1.5">Register</Link>
-                                    <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
-                                 </div>
-                           }
-                           <label htmlFor='mobile-menu-drawer' className="inline-block cursor-pointer lg:hidden">
-                              <RiMenu2Line className='text-3xl' />
-                           </label>
-                        </>
+                           <div className="flex gap-3 items-center flex-wrap">
+                              <Link href={'/signup'} className="btn bg-black text-white hover:bg-primary hidden sm:inline-flex py-1.5">Register</Link>
+                              <Link href={'/login'} className="btn btn-primary py-1.5">Login</Link>
+                           </div>
                      }
+                     <label htmlFor='mobile-menu-drawer' className="inline-block cursor-pointer lg:hidden">
+                        <RiMenu2Line className='text-3xl' />
+                     </label>
 
                   </div>
                </div>
