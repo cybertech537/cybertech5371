@@ -14,13 +14,13 @@ export default function HeaderTop() {
                </Link>
             </div>
             <div className="flex flex-wrap gap-2">
-               <a href="" className="flex items-center justify-center h-7 w-7 rounded-full border-2 border-white text-white hover:bg-white hover:text-primary">
+               <a href="https://facebook.com" target='_blank' className="flex items-center justify-center h-7 w-7 rounded-full border-2 border-white text-white hover:bg-white hover:text-primary" aria-label="Follow us on Facebook">
                   <FaFacebookF />
                </a>
-               <a href="" className="flex items-center justify-center h-7 w-7 rounded-full border-2 border-white text-white hover:bg-white hover:text-primary">
+               <a href="https://twitter.com" target='_blank' className="flex items-center justify-center h-7 w-7 rounded-full border-2 border-white text-white hover:bg-white hover:text-primary" aria-label="Follow us on twitter">
                   <FaTwitter />
                </a>
-               <a href="" className="flex items-center justify-center h-7 w-7 rounded-full border-2 border-white text-white hover:bg-white hover:text-primary">
+               <a href="https://youtube.com" target='_blank' className="flex items-center justify-center h-7 w-7 rounded-full border-2 border-white text-white hover:bg-white hover:text-primary" aria-label="Follow us on youtube">
                   <FaYoutube />
                </a>
             </div>

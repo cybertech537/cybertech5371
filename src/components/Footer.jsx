@@ -16,15 +16,15 @@ export default function Footer() {
                         DonorBridge is an automated blood service that connects blood searchers with voluntary blood donors in a moment through SMS and website.
                      </p>
                      <div className="flex flex-wrap gap-4 text-3xl mt-8 text-primary">
-                        <Link href={'/'}><FiFacebook /></Link>
-                        <Link href={'/'}><FiTwitter /></Link>
-                        <Link href={'/'}><FiLinkedin /></Link>
+                        <Link href={'https://facebook.com'} target='_blank' aria-label="Follow us on Facebook"><FiFacebook /></Link>
+                        <Link href={'https://twitter.com'} target='_blank' aria-label="Follow us on Twitter"><FiTwitter /></Link>
+                        <Link href={'https://linkedin.com'} target='_blank' aria-label="Follow us on Linkedin"><FiLinkedin /></Link>
                      </div>
                   </aside>
                   <nav>
-                     <h5 className="text-black text-2xl mb-5">
+                     <div className="text-black text-2xl mb-5 font-bold">
                         About Blood
-                     </h5>
+                     </div>
                      <div className="flex flex-col gap-3">
                         <Link href={'/'} className='hover:underline'>What is blood?</Link>
                         <Link href={'/'} className='hover:underline'>What is blood donation?</Link>
@@ -35,9 +35,9 @@ export default function Footer() {
                      </div>
                   </nav>
                   <nav>
-                     <h5 className="text-black text-2xl mb-5">
+                     <div className="text-black text-2xl mb-5 font-bold">
                         Help & Support
-                     </h5>
+                     </div>
                      <div className="flex flex-col gap-3">
                         <Link href={'#'} className='hover:underline'>FAQs</Link>
                         <Link href={'#'} className='hover:underline'>Blog</Link>
